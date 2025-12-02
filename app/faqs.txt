@@ -1,0 +1,39 @@
+1. What is Bricklix, and who is it for?
+
+Bricklix is a modern, scalable platform designed to streamline operations, automate repetitive tasks, and centralize business workflows. It’s built for startups, agencies, enterprises, and anyone who wants to run their business with more speed and clarity. Whether you’re managing a small team or running a large operation, Bricklix scales smoothly with your needs.
+
+2. How does Bricklix work on a daily basis?
+
+Bricklix brings your workflows into one clean, automated system. It handles tasks, approvals, real-time data processing, team collaboration, and intelligent insights powered by AI. Daily operations become faster, smarter, and far more organized, with automation reducing manual work and boosting productivity.
+
+3. How do I get started with Bricklix?
+
+Getting started is simple: create an account, request a demo or trial, and begin onboarding. Our team guides you through setup, system configuration, and feature activation. Most users are fully operational within a short onboarding window, depending on the complexity of your business.
+
+4. Can Bricklix integrate with my existing systems or tools?
+
+Yes — Bricklix connects seamlessly with popular tools and platforms. It supports third-party integrations, API connections, webhooks, and developer-friendly documentation, making it easy to plug into your existing ecosystem without disruption.
+
+5. Is Bricklix customizable for my business needs?
+
+Absolutely. Bricklix offers modular features, flexible workflow builders, UI/UX adjustments, role-based controls, and the option for custom development. If you want full branding control, white-labeling is also available.
+
+6. How does data migration and team training work?
+
+We assist with importing your existing data into Bricklix and ensure everything is structured correctly. During onboarding, your team gets guided training sessions, tutorials, and ongoing learning resources so they can adopt the platform quickly and confidently.
+
+7. How secure is Bricklix, and how is my data protected?
+
+Bricklix uses industry-grade encryption, secure storage, and continuous monitoring to protect your data. We follow modern compliance standards, offer regular backups, and ensure you always retain full ownership of your information. Your data stays safe, private, and recoverable.
+
+8. What are the pricing options and plans?
+
+Bricklix offers flexible pricing based on monthly or yearly plans. Options range from starter tiers to advanced and enterprise packages with additional features and support. Upgrading or downgrading is easy, so you can adjust based on your growth.
+
+9. What kind of support does Bricklix offer?
+
+We provide responsive support with clear service hours, fast ticket resolution, platform documentation, and a knowledge base. Higher-tier plans include priority support, dedicated account managers, and hands-on assistance when you need it.
+
+10. How reliable is Bricklix in terms of speed and uptime?
+
+Bricklix is built for high performance, offering fast load times, smooth handling of heavy workloads, and a strong uptime record. Regular updates keep the system optimized, secure, and running at top speed.
