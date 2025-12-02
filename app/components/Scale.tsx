@@ -15,8 +15,8 @@ interface ProfileData {
 const profileData: ProfileData = {
   name: "Oan Ali",
   title: "Project Manager",
-  company: "@Bricklix",
-  avatar: "/user.png" // Add your profile image path
+  company: "support@bricklix.com",
+  avatar: "/oan.webp" // Add your profile image path
 };
 
 // Main CTA Section Component
