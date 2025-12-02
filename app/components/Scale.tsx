@@ -16,7 +16,7 @@ const profileData: ProfileData = {
   name: "Oan Ali",
   title: "Project Manager",
   company: "support@bricklix.com",
-  avatar: "/oan.webp" // Add your profile image path
+  avatar: "/Oan.webp" // Add your profile image path
 };
 
 // Main CTA Section Component
