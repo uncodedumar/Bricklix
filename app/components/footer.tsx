@@ -208,7 +208,7 @@ const SupportInfo = () => {
                                     href="#"
                                     className=" text-gray-200 underline-offset-4 hover:underline"
                                 >
-                                    123 Main Street, New York, USA
+                                    8402 Captons Ln, # 104, Darien, IL 60561
                                     
                                 </Link>
                                 

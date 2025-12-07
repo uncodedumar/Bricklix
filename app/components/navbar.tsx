@@ -124,7 +124,7 @@ const Navbar: React.FC = () => {
     <div
       className={`
         fixed inset-0 z-50 bg-black transition-transform duration-300 ease-in-out
-        md:hidden
+        md:hidden z-index-9
         ${isOpen ? 'translate-x-0' : 'translate-x-full'}
       `}
     >
@@ -135,7 +135,7 @@ const Navbar: React.FC = () => {
         </button>
       </div>
 
-      <nav className="flex flex-col p-6 space-y-4">
+      <nav className="flex flex-col p-6 space-y-4 bg-black">
         {navLinks.map((link) => {
           const isActive = pathname === link.href;
           return (
@@ -205,8 +205,8 @@ const Navbar: React.FC = () => {
   const headerClasses = `
     fixed top-0 left-0 right-0 z-40 mb-10 transition-all duration-300 
     ${isScrolled 
-      ? 'bg-black/80 backdrop-blur-md shadow-2xl border-b border-gray-700/50' // Scrolled state: semi-transparent black with blur
-      : 'bg-transparent' // Default state: transparent
+      ? 'bg-black/80 backdrop-blur-md shadow-2xl ' // Scrolled state: semi-transparent black with blur
+      : 'bg-stone-950' // Default state: transparent
     }
   `;
 

@@ -477,7 +477,7 @@ const BricklixbotApp = () => {
         // 3. Add a bot message reflecting the return to the main menu
         const backMessage = (
             <div className="text-sm italic text-gray-500">
-                You returned to the **{previousStep === "main" ? "Main Menu" : previousStep.replace('_', ' ').toUpperCase()}**.
+                You returned to the {previousStep === "main" ? "Main Menu" : previousStep.replace('_', ' ').toUpperCase()}.
             </div>
         );
         addBotMessage(backMessage, { step: previousStep });
@@ -516,7 +516,7 @@ const BricklixbotApp = () => {
   useEffect(() => {
     // If chat is open and we haven't shown the first greeting yet
     if (isOpen && messages.length === 0 && !hasInitialGreeting) {
-      const dynamicGreeting = `Hello! I'm Bricklixbot. Since you are exploring our **${CURRENT_PAGE}**, how can I help guide your next development decision?`;
+      const dynamicGreeting = `Hello! I'm Bricklixbot. Since you are exploring our ${CURRENT_PAGE}, how can I help guide your next development decision?`;
       // Use updateStep for initial greeting to set the first history item
       updateStep("main", true); // Clear history and start at main
       addBotMessage(dynamicGreeting, { step: "main" });
@@ -645,7 +645,7 @@ const BricklixbotApp = () => {
     setContactInfo({ name: "", email: "", phone: "", purpose: "" });
     updateStep("collect_name"); // Use updateStep
     addBotMessage(
-      "To connect you with an expert, I'll need some quick details. What is your **full name**?",
+      "To connect you with an expert, I'll need some quick details. What is your full name?",
       { step: "collect_name" }
     );
   };
@@ -681,9 +681,9 @@ const BricklixbotApp = () => {
               } else {
                 updateInfo = { name: userResponse };
                 botMessage =
-                  "Thank you, **" +
+                  "Thank you, " +
                   userResponse +
-                  "**. What is your **email address**?";
+                  ". What is your email address?";
                 nextStep = "collect_email";
               }
               break;
@@ -696,7 +696,7 @@ const BricklixbotApp = () => {
               } else {
                 updateInfo = { email: userResponse };
                 botMessage =
-                  "Got it. What is the best **phone number** to reach you at?";
+                  "Got it. What is the best phone number to reach you at?";
                 nextStep = "collect_phone";
               }
               break;
@@ -709,7 +709,7 @@ const BricklixbotApp = () => {
               } else {
                 updateInfo = { phone: userResponse };
                 botMessage =
-                  "Finally, in one sentence, what is the **purpose** of your inquiry? (e.g., 'I need a custom ERP system.')";
+                  "Finally, in one sentence, what is the purpose of your inquiry? (e.g., 'I need a custom ERP system.')";
                 nextStep = "collect_purpose";
               }
               break;
@@ -750,17 +750,17 @@ const BricklixbotApp = () => {
                   <ul className="mt-2 text-xs p-0 list-none">
                     <li className="flex items-center">
                       <User2 className="w-3 h-3 mr-1" />
-                      Name: **{finalContactInfo.name}**
+                      Name: {finalContactInfo.name}
                     </li>
                     <li className="flex items-center">
                       <Mail className="w-3 h-3 mr-1" />
-                      Email: **{finalContactInfo.email}**
+                      Email: {finalContactInfo.email}
                     </li>
                     <li className="flex items-center">
                       <Phone className="w-3 h-3 mr-1" />
-                      Phone: **{finalContactInfo.phone}**
+                      Phone: {finalContactInfo.phone}
                     </li>
-                    <li className="mt-1">Purpose: *{finalContactInfo.purpose}*</li>
+                    <li className="mt-1">Purpose: {finalContactInfo.purpose}</li>
                   </ul>
                 </div>,
                 { step: "lead_sent" }
@@ -790,7 +790,7 @@ const BricklixbotApp = () => {
                 );
               } else {
                 addBotMessage(
-                  "I encountered an error sending the email. Please try again or navigate to our **Contact Page**.",
+                  "I encountered an error sending the email. Please try again or navigate to our Contact Page.",
                   { step: "main" }
                 );
               }

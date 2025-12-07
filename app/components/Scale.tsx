@@ -97,34 +97,7 @@ export default function CTASection() {
               Book a meeting
             </motion.button>
 
-            {/* Profile Section */}
-            <div className="flex items-center gap-4 ">
-              {/* Avatar */}
-              <div className="relative">
-                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full overflow-hidden ring-2 ring-white/20">
-                  <Image
-                    src={profileData.avatar}
-                    alt={`${profileData.name} - ${profileData.title}`}
-                    width={56}
-                    height={56}
-                    className="w-full h-full object-cover"
-                    priority
-                  />
-                </div>
-                {/* Online indicator */}
-                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-gray-900"></div>
-              </div>
-
-              {/* Profile Info */}
-              <div className="text-left">
-                <h3 className="text-white font-semibold text-base md:text-lg">
-                  {profileData.name}
-                </h3>
-                <p className="text-gray-400 text-sm md:text-base">
-                  {profileData.title} {profileData.company}
-                </p>
-              </div>
-            </div>
+            
           </motion.div>
         </motion.div>
 

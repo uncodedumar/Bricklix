@@ -27,7 +27,7 @@ const App = () => {
         // Changed bg-black to bg-stone-900
         <section className="relative bg-stone-900 text-white min-h-screen flex items-center justify-center overflow-hidden font-['Poppins']">
             
-            {/* Background Video (Kept from original code) */}
+            {/* Background Video and Overlay */}
             <div className="absolute inset-0 z-0 flex items-center justify-center">
                 <video
                     src={videoSrc}
@@ -39,6 +39,13 @@ const App = () => {
                     className="absolute inset-0 w-full h-full object-cover opacity-50"
                     onError={(e) => console.log('Video failed to load:', e)}
                 />
+                
+                {/* *** GRADUAL BLACK OVERLAY ADDED HERE ***
+                  This div covers the video and applies a linear gradient 
+                  from transparent (on top) to black/stone-900 (on bottom) 
+                  to create the "gradually get black" effect.
+                */}
+                <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-stone-900/90 via-stone-900/20 to-black"></div>
             </div>
 
             
@@ -67,7 +74,7 @@ const App = () => {
                     <div className="flex items-center space-x-3 text-sm pt-8 justify-center lg:justify-start">
                         {/* Changed icon color from text-purple-400 to text-red-500 */}
                         <Users className="w-5 h-5 text-red-500"/>
-                        <p className="font-light">
+                        <p className="font-light p-10">
                             <span className="font-semibold text-white">500+</span> people & brands have used our services
                         </p>
                     </div>
@@ -76,10 +83,10 @@ const App = () => {
 
                 {/* RIGHT SECTION: Stats Cards (lg:col-span-5) */}
                 {/* Updated classes:
-                  - flex-col: Removed (no longer strictly vertical on mobile)
-                  - space-y-6: Changed to gap-6 for better grid/flex spacing
-                  - Added justify-center for centering cards on mobile
-                  - Added flex-wrap for cards to wrap responsively on smaller screens if they don't fit horizontally
+                    - flex-col: Removed (no longer strictly vertical on mobile)
+                    - space-y-6: Changed to gap-6 for better grid/flex spacing
+                    - Added justify-center for centering cards on mobile
+                    - Added flex-wrap for cards to wrap responsively on smaller screens if they don't fit horizontally
                 */}
                 <div className="lg:col-span-5 flex flex-wrap gap-6 self-start justify-center lg:flex-col lg:space-y-6 lg:gap-0 lg:justify-end lg:items-end w-full lg:pt-16">
                     <StatCard 

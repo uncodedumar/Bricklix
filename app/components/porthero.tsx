@@ -151,11 +151,7 @@ export default function PortfolioCarousel() {
                             <span>Let&apos;s Collaborate</span>
                             <span>→</span>
                         </a>
-                        {/* Replaced Next.js Link with <a> tag */}
-                        <a href='/contact' className="flex items-center justify-center space-x-2 px-8 py-4 bg-stone-900 text-stone-200 border border-stone-600 rounded-full font-semibold text-lg transition-all duration-300 hover:bg-stone-800 hover:text-white hover:border-red-500">
-                            <span>Contact Us Now</span>
-                            <span className="text-red-500">✉</span>
-                        </a>
+                        
                     </div>
                 </div>
 

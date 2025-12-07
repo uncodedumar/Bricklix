@@ -1,9 +1,12 @@
 'use client'
 import React, { useRef, useEffect, useState, useCallback } from 'react';
-import { Code, Palette, Smartphone, Globe, Database, Shield, Cpu, Cloud, Lock, Zap, Layers, Settings } from 'lucide-react';
+import { Code, Palette, Smartphone, Globe, Database, Shield, Cpu, Cloud, Lock, Zap, Layers, Settings, X, Phone } from 'lucide-react';
+
+// Images are in the public folder, referenced as string paths
 
 const DEFAULT_GLOW_COLOR = '239, 68, 68'; // Red color
 
+// 1. AUGMENTED servicesData with fullDescription and contactLink
 const servicesData = [
     {
         id: 1,
@@ -12,7 +15,10 @@ const servicesData = [
         title: 'Web Development',
         description: 'Modern, responsive websites built with latest technologies',
         icon: Code,
-        span: 'col-span-1 row-span-1'
+        span: 'col-span-1 row-span-1',
+        image: '/web.avif',
+        fullDescription: 'We specialize in building high-performance, scalable web applications using modern frameworks like React, Next.js, and TypeScript. Our focus is on clean architecture, seamless user experience, and optimized performance for all devices. We handle everything from single-page applications to complex enterprise solutions.',
+        contactLink: '/contact'
     },
     {
         id: 2,
@@ -27,7 +33,10 @@ const servicesData = [
         title: 'UI/UX Design',
         description: 'Beautiful, intuitive interfaces that users love',
         icon: Palette,
-        span: 'col-span-1 row-span-1'
+        span: 'col-span-1 row-span-1',
+        image: '/mobile.avif',
+        fullDescription: 'Our design philosophy centers on the user. We create beautiful, intuitive, and accessible user interfaces (UI) and conduct thorough user experience (UX) research to ensure your product is not just attractive, but genuinely easy and enjoyable to use. We deliver prototypes, wireframes, and final design assets.',
+        contactLink: '/contact' // Example link
     },
     {
         id: 4,
@@ -36,7 +45,10 @@ const servicesData = [
         title: 'Mobile Apps',
         description: 'Native and cross-platform mobile applications',
         icon: Smartphone,
-        span: 'col-span-1 row-span-1'
+        span: 'col-span-1 row-span-1',
+        image: '/uiux.avif',
+        fullDescription: 'Develop robust, high-quality mobile applications for iOS and Android. Whether you need native performance using Swift/Kotlin or cross-platform efficiency with React Native or Flutter, we deliver apps that leverage device capabilities for a superior mobile experience.',
+       contactLink: '/contact'
     },
     {
         id: 5,
@@ -51,7 +63,10 @@ const servicesData = [
         title: 'Cloud Solutions',
         description: 'Scalable cloud infrastructure and deployment',
         icon: Database,
-        span: 'lg:col-span-2 row-span-1' // Adjusted span for large screens
+        span: 'lg:col-span-2 row-span-1',
+        image: '/cloud.jpeg',
+        fullDescription: 'Leverage the power of the cloud (AWS, Azure, GCP) to achieve unmatched scalability, reliability, and cost-efficiency. We provide consultation, migration, and management for cloud infrastructure, ensuring your application is always running optimally.',
+        contactLink: '/contact'
     },
     {
         id: 7,
@@ -60,7 +75,10 @@ const servicesData = [
         title: 'Digital Strategy',
         description: 'Data-driven strategies to grow your presence',
         icon: Globe,
-        span: 'col-span-1 row-span-1'
+        span: 'col-span-1 row-span-1',
+        image: '/digital.avif',
+        fullDescription: 'We help define your digital roadmap. From market analysis and audience definition to content strategy and performance measurement, our data-driven approach ensures your digital presence is aligned with your business goals and delivers measurable results.',
+        contactLink: '/contact'
     },
     {
         id: 8,
@@ -69,7 +87,10 @@ const servicesData = [
         title: 'API Integration',
         description: 'Seamless third-party service connections',
         icon: Settings,
-        span: 'col-span-1 row-span-1'
+        span: 'col-span-1 row-span-1',
+        image: '/ap.avif',
+        fullDescription: 'Integrate your core systems with essential third-party services, payment gateways, and external APIs. We build secure, reliable, and well-documented APIs to ensure seamless communication between different software systems, streamlining your business processes.',
+        contactLink: '/contact'
     },
     {
         id: 9,
@@ -84,7 +105,10 @@ const servicesData = [
         title: 'AI Solutions',
         description: 'Intelligent automation and machine learning',
         icon: Cpu,
-        span: 'col-span-1 row-span-1'
+        span: 'col-span-1 row-span-1',
+        image: '/ai.jpeg',
+        fullDescription: 'Harness the power of Artificial Intelligence and Machine Learning to automate tasks, gain deeper insights from data, and create smarter products. Our services include model development, deployment, and integration for solutions like predictive analytics and natural language processing.',
+        contactLink: '/contact'
     },
     {
         id: 11,
@@ -93,7 +117,10 @@ const servicesData = [
         title: 'DevOps',
         description: 'CI/CD pipelines and infrastructure automation',
         icon: Cloud,
-        span: 'col-span-1 row-span-1'
+        span: 'col-span-1 row-span-1',
+        image: '/devops.avif',
+        fullDescription: 'Implement robust DevOps practices, including Continuous Integration and Continuous Deployment (CI/CD), infrastructure as code (IaC), and automated testing. This accelerates your release cycles, improves reliability, and ensures a smooth operational workflow.',
+        contactLink: '/contact'
     },
     {
         id: 12,
@@ -108,7 +135,10 @@ const servicesData = [
         title: 'Cybersecurity',
         description: 'Enterprise-grade security solutions',
         icon: Shield,
-        span: 'col-span-1 row-span-1'
+        span: 'col-span-1 row-span-1',
+        image: '/cyber.avif',
+        fullDescription: 'Protect your assets with comprehensive cybersecurity services. We offer penetration testing, security audits, compliance checks, and implementation of advanced security protocols to safeguard your application and user data against emerging threats.',
+        contactLink: '/contact'
     },
     {
         id: 14,
@@ -117,7 +147,10 @@ const servicesData = [
         title: 'Optimization',
         description: 'Speed and performance enhancement',
         icon: Zap,
-        span: 'lg:col-span-2 row-span-1' // Adjusted span for large screens
+        span: 'lg:col-span-2 row-span-1',
+        image: '/opt.webp',
+        fullDescription: 'Maximize your application speed and efficiency. Our optimization services include code profiling, database tuning, caching strategies, and load balancing to ensure your product delivers a fast, seamless experience even under high traffic.',
+       contactLink: '/contact'
     },
     {
         id: 15,
@@ -126,7 +159,10 @@ const servicesData = [
         title: 'Data Security',
         description: 'Secure data storage and encryption',
         icon: Lock,
-        span: 'col-span-1 row-span-1'
+        span: 'col-span-1 row-span-1',
+        image: '/sec.avif',
+        fullDescription: 'Ensure the confidentiality and integrity of your sensitive data. We implement industry-leading encryption standards, secure database configurations, and robust access control mechanisms to protect data both at rest and in transit.',
+        contactLink: '/contact'
     },
     {
         id: 16,
@@ -141,10 +177,14 @@ const servicesData = [
         title: 'System Design',
         description: 'Scalable architecture and microservices',
         icon: Layers,
-        span: 'col-span-1 row-span-1'
+        span: 'col-span-1 row-span-1',
+        image: '/sys.jpg',
+        fullDescription: 'Design resilient and scalable system architectures, transitioning from monolithic structures to modern microservices where appropriate. We focus on creating a foundation that can easily handle future growth and evolution of your business needs.',
+        contactLink: '/contact'
     }
 ];
 
+// Helper function remains the same
 const createParticleElement = (x: number, y: number): HTMLDivElement => {
     const el = document.createElement('div');
     el.className = 'particle';
@@ -163,12 +203,128 @@ const createParticleElement = (x: number, y: number): HTMLDivElement => {
     return el;
 };
 
-const ServiceCard: React.FC<{ service: typeof servicesData[0]; index: number }> = ({ service, index }) => {
-    const cardRef = useRef<HTMLAnchorElement>(null); // Changed to AnchorElement
+// 2. NEW: ServiceDetailsModal Component
+interface ServiceDetails extends Omit<typeof servicesData[0], 'icon'> {
+    icon: React.ElementType;
+    fullDescription: string;
+    contactLink: string;
+}
+
+const ServiceDetailsModal: React.FC<{ 
+    service: ServiceDetails | null; 
+    onClose: () => void 
+}> = ({ service, onClose }) => {
+    if (!service) return null;
+
+    return (
+        <div 
+            className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8 animate-fade-in"
+            onClick={onClose}
+        >
+            <div 
+                className="w-full max-w-4xl bg-stone-900 border border-stone-800 rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 sm:scale-100 sm:opacity-100 transition-all duration-300 ease-out"
+                onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
+                style={{ animation: 'slide-up-modal 0.5s ease-out forwards' }}
+            >
+                <div className="grid grid-cols-1 lg:grid-cols-2">
+                    {/* Left Column: Image and Main Info */}
+                    <div className="relative p-6 sm:p-8 flex flex-col justify-between">
+                        <div className="absolute inset-0">
+                            {service.image && (
+                                <img 
+                                    src={service.image} 
+                                    alt={service.title} 
+                                    className="w-full h-full object-cover opacity-30 rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none"
+                                />
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-stone-900/80 to-transparent" />
+                        </div>
+
+                        <div className="relative z-10">
+                            <service.icon className="w-8 h-8 text-red-500 mb-4" />
+                            <span className="text-stone-400 text-sm font-medium px-3 py-1 bg-stone-800/50 rounded-full border border-stone-700 mb-2 inline-block">
+                                {service.label}
+                            </span>
+                            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 leading-snug">{service.title}</h2>
+                            <p className="text-stone-300 text-lg mb-6">{service.description}</p>
+                            
+                            {/* Contact Button */}
+                            <a 
+                                href={service.contactLink}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center justify-center px-6 py-3 border border-red-500 text-base font-semibold rounded-full text-white bg-red-600 hover:bg-red-700 transition-all duration-300 shadow-lg shadow-red-500/20"
+                            >
+                                <Phone className="w-5 h-5 mr-3" />
+                                Free Consultation
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Right Column: Full Description and Close Button */}
+                    <div className="p-6 sm:p-8 bg-stone-950/50 flex flex-col justify-between">
+                        <h3 className="text-2xl font-semibold text-red-400 mb-4">Detailed Overview</h3>
+                        <p className="text-stone-400 text-base leading-relaxed mb-8 flex-grow">
+                            {service.fullDescription}
+                        </p>
+                        
+                        <button
+                            onClick={onClose}
+                            className="w-full py-3 border border-stone-700 rounded-xl text-stone-300 hover:text-white hover:bg-stone-800 transition-all duration-200 mt-4 flex items-center justify-center"
+                        >
+                            <X className="w-5 h-5 mr-2" />
+                            Close Details
+                        </button>
+                    </div>
+                </div>
+                
+                {/* Top Right Close Button for convenience on larger screens */}
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 p-2 bg-stone-800/80 hover:bg-stone-700/80 backdrop-blur-sm rounded-full text-white transition-all duration-300"
+                    aria-label="Close"
+                >
+                    <X className="w-6 h-6" />
+                </button>
+            </div>
+            
+            {/* Custom Modal Animation CSS */}
+            <style jsx global>{`
+                @keyframes slide-up-modal {
+                    from {
+                        opacity: 0;
+                        transform: translateY(20px) scale(0.95);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0) scale(1);
+                    }
+                }
+                @media (max-width: 640px) { /* Small screen adjustments for better mobile feel */
+                    .animate-fade-in > div {
+                        transform: none !important;
+                        opacity: 1 !important;
+                        animation: none !important;
+                    }
+                }
+            `}</style>
+        </div>
+    );
+};
+
+
+// 3. MODIFIED ServiceCard Component
+const ServiceCard: React.FC<{ 
+    service: typeof servicesData[0]; 
+    index: number;
+    onClick: (service: typeof servicesData[0]) => void; // New prop for click handler
+}> = ({ service, index, onClick }) => {
+    const cardRef = useRef<HTMLDivElement>(null); // Changed back to DivElement
     const particlesRef = useRef<HTMLDivElement[]>([]);
     const isHoveredRef = useRef(false);
     const [isVisible, setIsVisible] = useState(false);
 
+    // ... (Particle and intersection observer logic remains the same, adjusted to DivElement) ...
     const clearParticles = useCallback(() => {
         particlesRef.current.forEach(p => p.remove());
         particlesRef.current = [];
@@ -253,12 +409,14 @@ const ServiceCard: React.FC<{ service: typeof servicesData[0]; index: number }> 
         };
     }, [animateParticles, clearParticles]);
 
-    // **Wrapped in <a> tag for /contact link**
+
+    // Return a Div with an onClick handler
     return (
-        <a
-            href="/contact"
+        <div
             ref={cardRef}
-            className={`service-card ${service.span} relative overflow-hidden rounded-2xl border border-stone-800 p-0 group cursor-pointer transition-all duration-300 ease-in-out block ${isVisible ? 'animate-slide-up' : 'opacity-0'
+            // Only clickable for service.type === 'text'
+            onClick={service.type === 'text' ? () => onClick(service) : undefined}
+            className={`service-card ${service.span} relative overflow-hidden rounded-2xl border border-stone-800 p-0 group ${service.type === 'text' ? 'cursor-pointer' : 'cursor-default'} transition-all duration-300 ease-in-out block ${isVisible ? 'animate-slide-up' : 'opacity-0'
                 } ${service.type === 'text' ? 'bg-black' : 'bg-gradient-to-br from-stone-700 to-black'}`}
             style={{
                 aspectRatio: service.type === 'image-only' ? '1 / 1' : undefined,
@@ -266,7 +424,7 @@ const ServiceCard: React.FC<{ service: typeof servicesData[0]; index: number }> 
                 animationDelay: `${index * 100}ms`,
             }}
         >
-            {/* Image-Only Card Content */}
+            {/* Image-Only Card Content (NO CHANGE) */}
             {service.type === 'image-only' && (
                 <div className="absolute inset-0 p-6">
                     {service.imageType === 'gradient-mesh' && (
@@ -330,22 +488,40 @@ const ServiceCard: React.FC<{ service: typeof servicesData[0]; index: number }> 
                 </div>
             )}
 
-            {/* Text Card Content */}
+            {/* Text Card Content - MODIFIED (no change from your original text content logic) */}
             {service.type === 'text' && (
-                <div className="p-6 h-full">
-                    <div className="relative z-10 h-full flex flex-col justify-between ">
-                        <div className="flex justify-between items-start">
-                            <span className="text-stone-400 text-sm font-medium px-3 py-1 bg-stone-900/50 rounded-full border border-stone-800 group-hover:border-red-500/50 group-hover:text-red-400 transition-all duration-300">
-                                {service.label}
-                            </span>
-                            <div className="p-2 bg-stone-800/50 rounded-lg border border-stone-700 group-hover:border-red-500/30 group-hover:scale-110 transition-all duration-300">
-                                {service.icon && <service.icon className="w-5 h-5 text-stone-400 group-hover:text-red-400 group-hover:rotate-12 transition-all duration-300" />}
-                            </div>
+                <div className="p-4 h-full flex flex-col justify-between">
+                    <div className="flex justify-between items-start">
+                        <span className="text-stone-400 text-sm font-medium px-3 py-1 bg-stone-900/50 rounded-full border border-stone-800 group-hover:border-red-500/50 group-hover:text-red-400 transition-all duration-300">
+                            {service.label}
+                        </span>
+                        <div className="p-2 bg-stone-800/50 rounded-lg border border-stone-700 group-hover:border-red-500/30 group-hover:scale-110 transition-all duration-300">
+                            {service.icon && <service.icon className="w-5 h-5 text-stone-400 group-hover:text-red-400 group-hover:rotate-12 transition-all duration-300" />}
                         </div>
-                        <div className="transform group-hover:translate-y-[-4px] transition-transform duration-300">
-                            <h3 className="text-white text-lg font-bold mb-2 group-hover:text-red-400 transition-colors duration-300">{service.title}</h3>
-                            <p className="text-stone-400 text-sm leading-relaxed group-hover:text-stone-300 transition-colors duration-300">{service.description}</p>
-                        </div>
+                    </div>
+
+                    {/* Placeholder for the large white square with the image */}
+                    <div className="relative w-full flex-grow mx-auto mt-4 mb-4 rounded-xl overflow-hidden shadow-xl"
+                        style={{
+                            backgroundColor: 'stone-950',
+                            minHeight: '100px',
+                            aspectRatio: '16/9',
+                            maxHeight: '350px'
+                        }}>
+                        {/* The image is now conditionally rendered using the imported module */}
+                        {service.image && (
+                            <img
+                                src={service.image}
+                                alt={service.title}
+                                className="absolute inset-0 w-full h-full object-cover rounded-xl "
+                            />
+                        )}
+
+                    </div>
+
+                    <div className="transform group-hover:translate-y-[-4px] transition-transform duration-300 mt-auto">
+                        <h3 className="text-white text-lg font-bold mb-1 group-hover:text-red-400 transition-colors duration-300">{service.title}</h3>
+                        <p className="text-stone-400 text-sm leading-relaxed group-hover:text-stone-300 transition-colors duration-300">{service.description}</p>
                     </div>
                 </div>
             )}
@@ -365,14 +541,36 @@ const ServiceCard: React.FC<{ service: typeof servicesData[0]; index: number }> 
 
             {/* Hover Overlay - Applied to both types */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-red-600/10 to-transparent" />
-        </a>
+        </div>
     );
 };
 
+
+// 4. MODIFIED ServicesBento Component
 const ServicesBento = () => {
     const gridRef = useRef<HTMLDivElement>(null);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [isHovering, setIsHovering] = useState(false);
+
+    // New State for Modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedService, setSelectedService] = useState<ServiceDetails | null>(null);
+
+    const openServiceModal = (service: typeof servicesData[0]) => {
+        // Only open modal for 'text' type services, which contain the full info
+        if (service.type === 'text') {
+             // Cast to ServiceDetails as we've confirmed the 'text' type objects have the extra props
+            setSelectedService(service as ServiceDetails); 
+            setIsModalOpen(true);
+            document.body.style.overflow = 'hidden'; // Disable background scroll
+        }
+    };
+
+    const closeServiceModal = () => {
+        setIsModalOpen(false);
+        setSelectedService(null);
+        document.body.style.overflow = 'unset'; // Re-enable background scroll
+    };
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
@@ -391,6 +589,24 @@ const ServicesBento = () => {
         window.addEventListener('mousemove', handleMouseMove);
         return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
+
+    // Handle ESC key to close modal
+    useEffect(() => {
+        const handleKeydown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape' && isModalOpen) {
+                closeServiceModal();
+            }
+        };
+
+        if (isModalOpen) {
+            window.addEventListener('keydown', handleKeydown);
+        } else {
+            window.removeEventListener('keydown', handleKeydown);
+        }
+
+        return () => window.removeEventListener('keydown', handleKeydown);
+    }, [isModalOpen]);
+
 
     return (
         <div className="relative bg-black min-h-screen py-20 overflow-hidden">
@@ -433,7 +649,7 @@ const ServicesBento = () => {
                     </p>
                 </div>
 
-                {/* Bento Grid - Added full responsiveness here */}
+                {/* Bento Grid */}
                 <div
                     ref={gridRef}
                     className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
@@ -442,15 +658,18 @@ const ServicesBento = () => {
                     }}
                 >
                     {servicesData.map((service, index) => (
-                        <ServiceCard key={service.id} service={service} index={index} />
+                        <ServiceCard key={service.id} service={service} index={index} onClick={openServiceModal} />
                     ))}
                 </div>
             </div>
+            
+            {/* NEW: Render the Modal component */}
+            {isModalOpen && (
+                <ServiceDetailsModal service={selectedService} onClose={closeServiceModal} />
+            )}
 
             <style jsx>{`
-                /* Simplified CSS to rely more on Tailwind classes for responsiveness,
-                   but keeping necessary custom animations and hover effects */
-
+                /* Your original CSS styles remain here */
                 @keyframes slide-up {
                     from {
                         opacity: 0;
@@ -509,7 +728,6 @@ const ServicesBento = () => {
                     --glow-intensity: 0;
                     --mouse-x: 50%;
                     --mouse-y: 50%;
-                    /* Ensure initial state for responsiveness */
                     grid-column: span 1;
                     grid-row: span 1;
                 }
@@ -544,23 +762,6 @@ const ServicesBento = () => {
                 .service-card:hover::after {
                     opacity: 1;
                 }
-
-                /* Mobile/Default: grid-cols-1, all cards are full-width/span-1 */
-                /* Tablet (md:): grid-cols-2, all cards remain span-1 to balance the layout */
-                /* Desktop (lg:): grid-cols-3, using lg:col-span-2 for wider cards */
-                
-                /*
-                  Removed specific media queries for col-span since the Tailwind utility
-                  classes already handle this on the grid container and the service spans
-                  are defined to work with it:
-                  col-span-1 (default) -> md:col-span-1 -> lg:col-span-1
-                  lg:col-span-2 (on specific cards)
-                  
-                  This ensures a fully responsive flow:
-                  - Mobile: 1 column
-                  - Tablet: 2 columns
-                  - Desktop: 3 columns (with some spanning 2 columns)
-                */
             `}</style>
         </div>
     );

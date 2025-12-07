@@ -9,7 +9,7 @@ const inquiryOptions: { id: InquiryType; label: string; index: number }[] = [
     { id: 'takeService', label: 'Get Service', index: 1 },
     { id: 'workOnProject', label: 'New Project', index: 2 },
     { id: 'workWithTeam', label: 'Staff Augmentation', index: 3 },
-    { id: 'outsourceProject', label: 'Outsource', index: 4 },
+    { id: 'outsourceProject', label: 'Outsourcing', index: 4 },
 ];
 
 // Define the type for the formData object
