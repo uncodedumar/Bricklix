@@ -123,19 +123,19 @@ const Navbar: React.FC = () => {
   const renderMobileMenu = () => (
     <div
       className={`
-        fixed inset-0 z-50 bg-black transition-transform duration-300 ease-in-out
-        md:hidden z-index-9
+        fixed inset-0 z-[100] bg-black transition-transform duration-300 ease-in-out
+        md:hidden
         ${isOpen ? 'translate-x-0' : 'translate-x-full'}
       `}
     >
-      <div className="flex justify-between items-center p-4 border-b border-gray-800 h-16">
+      <div className="flex justify-between items-center p-4 border-b border-gray-800 h-16 bg-black">
         <Logo />
         <button onClick={toggleMenu} className="p-2 text-white rounded-lg hover:bg-gray-800">
           <CloseIcon />
         </button>
       </div>
 
-      <nav className="flex flex-col p-6 space-y-4 bg-black">
+      <nav className="flex flex-col p-6 space-y-4 bg-black min-h-screen">
         {navLinks.map((link) => {
           const isActive = pathname === link.href;
           return (
@@ -206,7 +206,7 @@ const Navbar: React.FC = () => {
     fixed top-0 left-0 right-0 z-40 mb-10 transition-all duration-300 
     ${isScrolled 
       ? 'bg-black/80 backdrop-blur-md shadow-2xl ' // Scrolled state: semi-transparent black with blur
-      : 'bg-stone-950' // Default state: transparent
+      : 'bg-transparent backdrop-blur-lg shadow-2xl' // Default state: transparent
     }
   `;
 

@@ -97,7 +97,7 @@ const teamMembers: ChromaItem[] = [
     },
     
     {
-        image: "/Oan.webp",
+        image: "/Oan.png",
         title: "Oan Ali",
         subtitle: "Project Manager",
         // handle: "@oanali", // Removed

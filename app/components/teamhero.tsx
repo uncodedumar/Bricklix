@@ -39,7 +39,7 @@ const teamMembers: TeamMember[] = [
     },
     {
         id: 4,
-        image: '/Oan.webp',
+        image: '/Oan.png',
         name: 'Oan Ali',
         role: 'Project Manager',
         color: 'from-stone-600 to-red-800'
