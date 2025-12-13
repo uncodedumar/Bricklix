@@ -5,6 +5,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
+// --- Utility function to create URL-safe slugs ---
+const createSlug = (text: string): string => {
+    return text
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '') // Remove non-alphanumeric characters except spaces and hyphens
+        .trim()
+        .replace(/\s+/g, '-'); // Replace spaces with hyphens
+};
+
 // TypeScript interfaces for footer data
 interface FooterLink {
     label: string;
@@ -29,6 +38,7 @@ interface Support {
 
 }
 // Footer data structure
+// UPDATED: Service links now point to /services#[service-slug]
 const footerData: FooterSection[] = [
     {
         title: "Company",
@@ -43,11 +53,12 @@ const footerData: FooterSection[] = [
     {
         title: "Services",
         links: [
-            { label: "Web Design & Development", href: "/contact" },
-            { label: "App Design & Development", href: "/contact" },
-            { label: "Visual Design", href: "/contact" },
-            { label: "AI Integrations", href: "/contact" },
-            { label: "Cybersecurity", href: "/contact" }
+            // Links now point to a specific section ID on the services page
+            { label: "Web Design & Development", href: `/services#${createSlug("Web Development")}` },
+            { label: "App Design & Development", href: `/services#${createSlug("Mobile Apps")}` },
+            { label: "Visual Design", href: `/services#${createSlug("UI/UX Design")}` },
+            { label: "AI Integrations", href: `/services#${createSlug("AI Solutions")}` },
+            { label: "Cybersecurity", href: `/services#${createSlug("Cybersecurity")}` }
         ]
     }
 ];
@@ -198,28 +209,28 @@ const SupportInfo = () => {
                             <p className="text-gray-200">{support.email}</p>
                             <div className="flex flex-wrap gap-2">
                             <Link
-                                    href="#"
-                                    className=" text-gray-200 underline-offset-4 hover:underline"
-                                >
-                                    +1 (224) 844 5596
+                                        href="#"
+                                        className=" text-gray-200 underline-offset-4 hover:underline"
+                                    >
+                                        +1 (224) 844 5596
+                                        
+                                    </Link>
+                                    <Link
+                                        href="#"
+                                        className=" text-gray-200 underline-offset-4 hover:underline"
+                                    >
+                                        8402 Captons Ln, # 104, Darien, IL 60561
+                                        
+                                    </Link>
                                     
-                                </Link>
-                                <Link
-                                    href="#"
-                                    className=" text-gray-200 underline-offset-4 hover:underline"
-                                >
-                                    8402 Captons Ln, # 104, Darien, IL 60561
                                     
-                                </Link>
-                                
-                                
-                                <a
-                                    href={`mailto:${support.email}`}
-                                    className=" text-gray-200 underline-offset-4  hover:underline"
-                                >
-                                    Email us
-                                </a>
-                            </div>
+                                    <a
+                                        href={`mailto:${support.email}`}
+                                        className=" text-gray-200 underline-offset-4  hover:underline"
+                                    >
+                                        Email us
+                                    </a>
+                                </div>
                         </div>
                     </div>
                 ))}
@@ -255,6 +266,7 @@ export default function Footer() {
                         className="absolute bottom-0 w-full h-full opacity-20"
                         viewBox="0 0 1200 120"
                         preserveAspectRatio="none"
+                        aria-hidden="true" // A11y: Decorative
                     >
                         <path
                             d="M0,50 C300,120 600,0 900,80 C1050,120 1150,60 1200,80 L1200,120 L0,120 Z"

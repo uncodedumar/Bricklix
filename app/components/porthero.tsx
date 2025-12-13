@@ -69,7 +69,7 @@ export default function PortfolioCarousel() {
         lastScrollY.current = currentScrollY;
 
         // Base speed (continuous slow movement)
-        const BASE_SPEED = 0.5;
+        const BASE_SPEED = 3;
 
         // Calculate final speed (base + scroll velocity)
         const speed = BASE_SPEED + scrollVelocity.current;
@@ -78,7 +78,7 @@ export default function PortfolioCarousel() {
         animationRef.current.position -= speed;
 
         // Smooth velocity decay
-        scrollVelocity.current *= 0.95;
+        scrollVelocity.current *= 2.95;
 
         // Loop logic
         // We use the first two copies of the cards array for the total length calculation

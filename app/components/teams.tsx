@@ -136,6 +136,12 @@ export default function TeamIntroSection() {
                             Creative visionaries designing intuitive, beautiful interfaces that users love and remember.
                         </p>
                     </div>
+                    <div className="group p-8 bg-gradient-to-br from-stone-900 to-black border border-stone-800 rounded-2xl hover:border-red-500/30 transition-all duration-300 hover:transform hover:-translate-y-2">
+                        <Palette className="w-12 h-12 text-red-400 mb-4 group-hover:scale-110 transition-transform duration-300" />
+                        <h3 className="text-xl font-bold text-white mb-3">Project Management</h3>
+                        <p className="text-stone-400 leading-relaxed">
+                        We provide end-to-end project management and strategic consulting—owning delivery, aligning stakeholders, eliminating risk, and turning your ideas into on-time, on-budget results.                        </p>
+                    </div>
 
                     <div className="group p-8 bg-gradient-to-br from-stone-900 to-black border border-stone-800 rounded-2xl hover:border-red-500/30 transition-all duration-300 hover:transform hover:-translate-y-2">
                         <Target className="w-12 h-12 text-red-400 mb-4 group-hover:scale-110 transition-transform duration-300" />
@@ -153,14 +159,7 @@ export default function TeamIntroSection() {
                         </p>
                     </div>
 
-                    <div className="group p-8 bg-gradient-to-br from-stone-900 to-black border border-stone-800 rounded-2xl hover:border-red-500/30 transition-all duration-300 hover:transform hover:-translate-y-2">
-                        <Shield className="w-12 h-12 text-red-400 mb-4 group-hover:scale-110 transition-transform duration-300" />
-                        <h3 className="text-xl font-bold text-white mb-3">Security Experts</h3>
-                        <p className="text-stone-400 leading-relaxed">
-                            Dedicated professionals ensuring enterprise-grade security and data protection.
-                        </p>
-                    </div>
-
+                    
                     <div className="group p-8 bg-gradient-to-br from-stone-900 to-black border border-stone-800 rounded-2xl hover:border-red-500/30 transition-all duration-300 hover:transform hover:-translate-y-2">
                         <Users className="w-12 h-12 text-red-400 mb-4 group-hover:scale-110 transition-transform duration-300" />
                         <h3 className="text-xl font-bold text-white mb-3">Consultants</h3>

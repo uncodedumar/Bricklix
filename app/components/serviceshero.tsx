@@ -1,103 +1,151 @@
 'use client';
-import React from 'react';
-import { ChevronDown, BarChart3, TrendingUp, Users, LucideIcon } from 'lucide-react'; // Added LucideIcon type
+import React, { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { ChevronDown, BarChart3, TrendingUp, Users, LucideIcon, ArrowRight } from 'lucide-react';
+
+// --- Interface & Component for Stat Cards (UI Matched & Accessible) ---
 
 // Interface for StatCard props
 interface StatCardProps {
-  icon: LucideIcon;
-  value: string;
-  label: string;
+    icon: LucideIcon;
+    value: string;
+    label: string;
+    isPrimary?: boolean; // Highlight one card for visual interest
 }
 
 // Utility component for the stat cards
-const StatCard = ({ icon: Icon, value, label }: StatCardProps) => (
-    // Added 'mx-auto' for centering on small screens
-    <div className="bg-white/5 backdrop-blur-sm p-4 rounded-xl border border-red-500/20 shadow-2xl transition-transform duration-300 hover:scale-[1.03] w-[200px] text-left mx-auto">
-        {/* Adjusted accent color from purple-400 to red-500 */}
-        <p className={`text-4xl font-semibold ${value === "250+" ? 'text-red-500' : 'text-white'}`}>{value}</p>
-        <p className="text-sm font-light text-gray-300 mt-1">{label}</p>
-    </div>
+const StatCard = ({ icon: Icon, value, label, isPrimary = false }: StatCardProps) => (
+    // Accessibility: Role for a descriptive unit of information
+    <article className="bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-red-500/40 shadow-xl transition-transform duration-300 hover:scale-[1.05] hover:bg-black/60 w-full max-w-[280px] text-left mx-auto lg:mx-0">
+        <header className="flex items-center space-x-3 mb-2">
+            <Icon 
+                className={`w-6 h-6 ${isPrimary ? 'text-red-400' : 'text-gray-300'}`} 
+                aria-hidden="true" 
+            />
+            <p className="text-sm font-light text-gray-400 uppercase tracking-widest">{label}</p>
+        </header>
+        
+        {/* SEO/Accessibility: Use H3 for better outline and primary value highlight */}
+        <h3 className={`text-5xl font-extrabold ${isPrimary ? 'text-red-500' : 'text-white'} leading-tight`}>{value}</h3>
+    </article>
 );
 
-const App = () => {
-    // Keeping the original structure for the video src.
+// --- Main Hero Component ---
+
+const ServicesHero: React.FC = () => {
+    // State to handle video loading failure
+    const [mediaFailed, setMediaFailed] = useState<boolean>(false);
+    
+    // Define optimized sources
     const videoSrc = "/servbg.mp4";
+    const imageFallbackSrc = "/servbg-fallback.webp"; // Using an optimized WebP image fallback
 
     return (
-        // Changed bg-black to bg-stone-900
-        <section className="relative bg-stone-900 text-white min-h-screen flex items-center justify-center overflow-hidden font-['Poppins']">
+        // SEO: Use <section> with a descriptive role
+        <section 
+            className="relative bg-black text-white min-h-screen flex flex-col items-center overflow-hidden font-['Poppins']"
+            role="region"
+            aria-label="Digital Agency Services Overview"
+        >
             
-            {/* Background Video and Overlay */}
+            {/* 1. Background Media and Overlay (Performance & Accessibility) */}
             <div className="absolute inset-0 z-0 flex items-center justify-center">
-                <video
-                    src={videoSrc}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    // Decreased opacity slightly to emphasize the foreground content and darkness
-                    className="absolute inset-0 w-full h-full object-cover opacity-50"
-                    onError={(e) => console.log('Video failed to load:', e)}
-                />
+                {!mediaFailed ? (
+                    // Video element
+                    <video
+                        src={videoSrc}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover opacity-60"
+                        aria-hidden="true" // Hide decorative video from screen readers
+                        onError={() => setMediaFailed(true)} // Set flag on error
+                    />
+                ) : (
+                    // Image Fallback (Performance: Use priority for LCP candidate)
+                    <Image
+                        src={imageFallbackSrc}
+                        alt="Abstract digital network representing our comprehensive services"
+                        fill
+                        className="absolute inset-0 w-full h-full object-cover opacity-60"
+                        priority={true} // Performance: Essential for LCP
+                        sizes="100vw"
+                    />
+                )}
                 
-                {/* *** GRADUAL BLACK OVERLAY ADDED HERE ***
-                  This div covers the video and applies a linear gradient 
-                  from transparent (on top) to black/stone-900 (on bottom) 
-                  to create the "gradually get black" effect.
-                */}
-                <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-stone-900/90 via-stone-900/20 to-black"></div>
+                {/* Optimized Gradient Overlay (Matches previous dark theme) */}
+                <div 
+                    className="absolute inset-0 w-full h-full bg-gradient-to-b from-black/80 via-black/30 to-black/90"
+                    aria-hidden="true"
+                ></div>
+                
+                {/* Aesthetic Red Mesh Pattern */}
+                <div 
+                    className="mesh-pattern absolute inset-0 opacity-20 animate-pulse-slow"
+                    aria-hidden="true"
+                ></div>
             </div>
 
             
-            {/* Content Wrapper - Added pt-32 (padding top) to move content down */}
-            <div className="relative z-10 px-4 sm:px-6 lg:px-8 pt-24 md:pt-32 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-y-16 lg:gap-x-12 items-center min-h-[80vh]">
+            {/* 2. Content Wrapper */}
+            <div className="relative z-10 px-4 sm:px-6 lg:px-8 pt-24 md:pt-40 pb-16 max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-y-16 lg:gap-x-12 items-center">
                 
                 {/* LEFT SECTION: Title, Description, CTAs */}
-                {/* Added 'text-center' and 'lg:text-left' for mobile centering */}
                 <div className="lg:col-span-7 flex flex-col space-y-8 text-center lg:text-left">
-                    {/* Centered this element specifically for mobile */}
-                    <p className="text-sm font-medium tracking-widest uppercase text-red-500 py-10 mx-auto lg:mx-0">
-                        Crafting Beautiful and Functional Result
+                    
+                    {/* Pre-headline (SEO: Use a semantic paragraph) */}
+                    <p className="text-sm font-medium tracking-widest uppercase text-red-500 py-1 mx-auto lg:mx-0">
+                        Crafting Beautiful and Functional Results
                     </p>
 
-                    <h1 className="text-5xl md:text-7xl font-bold leading-tight">
+                    {/* H1 (SEO: Must be the main focus of the page) */}
+                    <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-extrabold leading-tight tracking-tighter">
                         Transforming <br className="hidden md:block"/> Visions Into Digital Reality
                     </h1>
                     
-                    {/* Added 'mx-auto lg:mx-0' to center paragraph on mobile */}
+                    {/* Description */}
                     <p className="max-w-xl text-lg font-light text-gray-300 mx-auto lg:mx-0">
                         We’re a full-service digital agency specializing in cutting-edge web development, strategic branding, and data-driven marketing solutions that propel businesses to new heights.
                     </p>
 
+                    {/* Call to Action Buttons (UX & SEO: Critical for conversion) */}
+                    <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6 pt-6 justify-center lg:justify-start">
+                        {/* Primary CTA */}
+                        <Link
+                            href="/contact"
+                            className="group flex items-center justify-center px-8 py-4 font-semibold text-lg bg-red-600 text-white rounded-xl transition-all duration-300 hover:bg-red-700 shadow-lg red-glow-shadow focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 max-w-xs sm:max-w-none mx-auto sm:mx-0"
+                        >
+                            Start Your Project
+                            <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
+                        </Link>
+                        
+                        
+                    </div>
                     
-                    {/* Social Proof - Added 'justify-center lg:justify-start' to center on mobile */}
-                    <div className="flex items-center space-x-3 text-sm pt-8 justify-center lg:justify-start">
-                        {/* Changed icon color from text-purple-400 to text-red-500 */}
-                        <Users className="w-5 h-5 text-red-500"/>
-                        <p className="font-light p-10">
+                    {/* Social Proof (Accessibility: Use an ARIA role) */}
+                    <div className="flex items-center space-x-3 text-sm pt-8 justify-center lg:justify-start" role="note" aria-label="Social proof statistic">
+                        <p className="font-light">
                             <span className="font-semibold text-white">500+</span> people & brands have used our services
                         </p>
                     </div>
-
                 </div>
 
-                {/* RIGHT SECTION: Stats Cards (lg:col-span-5) */}
-                {/* Updated classes:
-                    - flex-col: Removed (no longer strictly vertical on mobile)
-                    - space-y-6: Changed to gap-6 for better grid/flex spacing
-                    - Added justify-center for centering cards on mobile
-                    - Added flex-wrap for cards to wrap responsively on smaller screens if they don't fit horizontally
-                */}
-                <div className="lg:col-span-5 flex flex-wrap gap-6 self-start justify-center lg:flex-col lg:space-y-6 lg:gap-0 lg:justify-end lg:items-end w-full lg:pt-16">
-                    <StatCard 
-                        icon={BarChart3} 
-                        value="200+" 
-                        label="Projects Completed" 
-                    />
+                {/* RIGHT SECTION: Stats Cards */}
+                {/* Uses flex-wrap for horizontal stacking on small screens, and flex-col for vertical stacking on large screens */}
+                <div className="lg:col-span-5 flex flex-wrap justify-center gap-6 lg:flex-col lg:space-y-6 lg:justify-end lg:items-end w-full lg:pt-16">
+                    {/* Added isPrimary=true for the highest value card for a nice visual accent */}
                     <StatCard 
                         icon={TrendingUp} 
                         value="98%" 
                         label="Client Satisfaction" 
+                        isPrimary={true}
+                    />
+                    <StatCard 
+                        icon={BarChart3} 
+                        value="200+" 
+                        label="Projects Completed" 
                     />
                     <StatCard 
                         icon={Users} 
@@ -106,35 +154,46 @@ const App = () => {
                     />
                 </div>
             </div>
-
-        
             
+            {/* Scroll Indicator (Aesthetic/UX) */}
+            <div className="relative z-10 p-4 pb-8 flex justify-center items-center">
+                <ChevronDown className="w-6 h-6 text-white animate-bounce" aria-hidden="true" />
+            </div>
+            
+            
+            {/* Global Styles (Kept external to avoid component clutter) */}
             <style jsx global>{`
-                /* Import Poppins font */
-                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+                /* Import Poppins font for consistency */
+                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+                
+                /* PERFORMANCE: Load font from preload tag for LCP improvement */
+                /* In your main document <head>, you should add:
+                <link rel="preload" href="[FONT_URL]" as="font" type="font/woff2" crossorigin>
+                */
 
                 /* Keyframes for the slow pulse animation */
                 @keyframes pulse-slow {
                     0%, 100% { opacity: 0.5; transform: scale(1); }
-                    50% { opacity: 0.7; transform: scale(1.05); }
+                    50% { opacity: 0.7; transform: scale(1.02); } /* Reduced scale for subtler effect */
                 }
                 .animate-pulse-slow {
                     animation: pulse-slow 8s infinite ease-in-out;
                 }
 
-                /* Fixed Mesh Pattern - Updated color from purple (168,85,247) to red (239,68,68) */
+                /* Fixed Mesh Pattern */
                 .mesh-pattern {
+                    /* Red-500 equivalent: rgba(239, 68, 68, 0.5) */
                     background-image: radial-gradient(circle, rgba(239,68,68,0.5) 1px, transparent 0);
                     background-size: 15px 15px;
                 }
 
-                /* Red Glow Shadow - Added class to replace inline Tailwind shadow for custom color */
+                /* Red Glow Shadow (Applied to primary CTA for visual pop) */
                 .red-glow-shadow {
-                    box-shadow: 0 0 80px rgba(239,68,68,0.7); /* Red-500 equivalent */
+                    box-shadow: 0 0 40px rgba(239,68,68,0.5); /* Slightly softer red glow */
                 }
             `}</style>
         </section>
     );
 };
 
-export default App;
+export default ServicesHero;

@@ -516,7 +516,7 @@ const BricklixbotApp = () => {
   useEffect(() => {
     // If chat is open and we haven't shown the first greeting yet
     if (isOpen && messages.length === 0 && !hasInitialGreeting) {
-      const dynamicGreeting = `Hello! I'm Bricklixbot. Since you are exploring our ${CURRENT_PAGE}, how can I help guide your next development decision?`;
+      const dynamicGreeting = `Hello! I'm Brickly. Since you are exploring our ${CURRENT_PAGE}, how can I help guide your next development decision?`;
       // Use updateStep for initial greeting to set the first history item
       updateStep("main", true); // Clear history and start at main
       addBotMessage(dynamicGreeting, { step: "main" });
@@ -1110,7 +1110,7 @@ const BricklixbotApp = () => {
                     </button>
                 )}
                 <MessageSquareText className="w-6 h-6 mr-2" />
-                <h3 className="font-bold text-lg">Bricklixbot</h3>
+                <h3 className="font-bold text-lg">Brickly</h3>
               </div>
               <button
                 onClick={() => setIsOpen(false)}

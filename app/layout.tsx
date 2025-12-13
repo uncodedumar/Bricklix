@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 
 // ✅ This works because layout.tsx is a Server Component
 export const metadata: Metadata = {
-  title: "Bricklix | Ignition of Passion",
-  description: "AI & Digital Design Studio",
+  title: "Bricklix | Strategic Technology For Intelliegent Growth",
+  description: "Strategic Technology For Intelliegent Growth",
   icons: {
     icon: "/logo1.svg",
   },

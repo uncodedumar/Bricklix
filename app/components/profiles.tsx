@@ -46,8 +46,8 @@ const teamMembers: ChromaItem[] = [
         borderColor: "#EF4444",
         gradient: "linear-gradient(145deg, #EF4444, #000)",
         bio: {
-            paragraph: "Kashif is the visionary CEO and driving force behind Bricklix. With 5+ years in software engineering and web solutions, he blends strategic thinking with technical mastery to transform ideas into scalable, growth-focused digital products.",
-            bullets: ["Visionary Leadership", "Expert Sales Strategy", "15+ Years Industry Experience", "Focus on Customer Success"],
+            paragraph: "Kashif Zulfiqar Awan drives enterprise transformation through strategic program leadership, PMO governance, and executive-level management across global organizations.",
+            bullets: ["Senior Program Director & Executive Consultant — AT&T (via WNA Ltd.)","Director — Ericsson","President & Owner — Awan Business Management Group LLC","Program & Portfolio Management", "PMO Strategy & Governance", "Executive Leadership & Stakeholder Engagement", "Agile & Team Development"],
         },
     },
     {

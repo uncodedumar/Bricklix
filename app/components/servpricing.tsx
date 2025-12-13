@@ -1,19 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+// Removed useState and all click/state logic for 100% performance
 
 // --- Data Structure ---
-type TierName = "Enterprise Custom" | "Premium Support" | "Basic Assurance";
+type TierName = "Basic Assurance" | "Premium Support" | "Enterprise Custom";
 
 interface ServiceTier {
   name: TierName;
   tagline: string;
-  // price: string; <-- REMOVED
   style: "default" | "gradient";
+  // The 'excludedFeatures' list is maintained to derive feature inclusion
   excludedFeatures: string[];
 }
 
-// Full list of all potential features from the image (used for the right column)
+// Full list of all potential features (Features will become the rows of the table)
 const allFeatures = [
   "24/7 Monitoring",
   "Monthly Security Patches",
@@ -28,185 +29,164 @@ const allFeatures = [
 ];
 
 const serviceTiers: ServiceTier[] = [
+  // IMPORTANT: Ordered for logical comparison (lowest to highest)
   {
-    name: "Enterprise Custom",
-
-    tagline: "For businesses and power users who want it all.",
-    // price: '$99.99/mo', <-- REMOVED
+    name: "Basic Assurance",
+    tagline: "Best for beginners who want to explore the platform.",
     style: "default",
-    excludedFeatures: [],
+    excludedFeatures: [
+      "Real-time Threat Detection",
+      "Cloud Infrastructure Optimization",
+      "Proactive Code Review",
+      "24/7 Dedicated Engineer",
+      "Full Disaster Recovery Plan",
+    ],
   },
   {
     name: "Premium Support",
-
     tagline: "Perfect for professionals who need advanced tools.",
-    // price: '$49.99/mo', <-- REMOVED
-    style: "gradient",
+    style: "gradient", // Highlighted style for the middle/recommended tier
     excludedFeatures: [
       "24/7 Dedicated Engineer",
-      "100% Uptime Guarantee",
-      "Advanced Load Balancing",
       "Full Disaster Recovery Plan",
-      "Real-time Threat Detection",
-      
     ],
   },
   {
-    name: "Basic Assurance",
-
-    tagline: "Best for beginners who want to explore the platform.",
-    // price: '$19.99/mo', <-- REMOVED
+    name: "Enterprise Custom",
+    tagline: "For businesses and power users who want it all.",
     style: "default",
-    excludedFeatures: ["Real-time Threat Detection",
-  "Cloud Infrastructure Optimization",
-  "Proactive Code Review",
-  "24/7 Dedicated Engineer",
-  "Full Disaster Recovery Plan"
-     ,
-    ],
+    excludedFeatures: [],
   },
 ];
 
-// Helper to get the full tier object based on name
-const getTierData = (name: TierName) =>
-  serviceTiers.find((t) => t.name === name);
-
-// --- Sub Component: Individual Service Card (Click-Activated) ---
-const ServiceCard: React.FC<{
-  tier: ServiceTier;
-  setSelectedTier: (name: TierName) => void;
-  isSelected: boolean;
-}> = ({ tier, setSelectedTier, isSelected }) => {
-  // Base classes for active/selected state
-  const activeClasses = isSelected
-    ? "bg-gradient-to-br from-red-900 to-black/90 border-2 border-red-700 shadow-2xl shadow-red-900/50 transform scale-[1.03]"
-    : "bg-stone-900 border border-stone-800 hover:border-red-700/50 hover:scale-[1.02]";
-
-  return (
-    <div
-      className={`
-                relative w-full rounded-lg group cursor-pointer transition-all duration-300
-                ${activeClasses}
-            `}
-      // aria-label was changed from 'Service tier ${tier.name} at ${tier.price}'
-      aria-label={`Service tier ${tier.name}`}
-      role="button"
-      tabIndex={0}
-      onClick={() => setSelectedTier(tier.name)} // Click handler
-      onKeyDown={(e) => {
-        // Accessibility for keyboard users
-        if (e.key === "Enter" || e.key === " ") {
-          setSelectedTier(tier.name);
-        }
-      }}
+// --- Sub Component: Check/X Icon ---
+// Using static SVG for maximum performance over icon library imports
+const Icon: React.FC<{ isIncluded: boolean }> = ({ isIncluded }) => (
+  isIncluded ? (
+    <svg
+      className="w-5 h-5 lg:w-6 lg:h-6 text-red-700 flex-shrink-0"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      <div className={`p-6 md:p-8 rounded-xl h-full flex flex-col`}>
-        {/* Title and Tagline */}
-        <div className="mb-2">
-          <h3
-            className={`text-2xl md:text-3xl font-extrabold ${
-              isSelected ? "text-white" : "text-stone-300"
-            }`}
-          >
-            {tier.name}
-          </h3>
-          <p
-            className={`text-sm mt-1 ${
-              isSelected ? "text-red-300" : "text-stone-500"
-            }`}
-          >
-            {tier.tagline}
-          </p>
-        </div>
+      <title>Included</title>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="3"
+        d="M5 13l4 4L19 7"
+      />
+    </svg>
+  ) : (
+    <svg
+      className="w-5 h-5 lg:w-6 lg:h-6 text-stone-600 flex-shrink-0"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <title>Not Included</title>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="3"
+        d="M6 18L18 6M6 6l12 12"
+      />
+    </svg>
+  )
+);
 
-        {/* Price Display Block was entirely removed */}
-      </div>
-    </div>
-  );
-};
-
-// --- Sub Component: Feature List (Dynamic based on selected card) ---
-const FeatureList: React.FC<{ tierName: TierName }> = ({ tierName }) => {
-  const tierData = getTierData(tierName);
-  const excluded = tierData ? tierData.excludedFeatures : [];
-
+// --- Main Component: Static Comparative Pricing Table ---
+export default function ComparisonPricingTable() {
   return (
-    <div className="lg:col-span-1 lg:pl-10">
-      <h2 className="text-xl font-bold text-white mb-6">Includes:</h2>
-      <ul className="space-y-4">
-        {allFeatures.map((feature, idx) => {
-          const isIncluded = !excluded.includes(feature);
-          const textColor = isIncluded ? "text-white" : "text-stone-500";
-
-          return (
-            <li key={idx} className="flex items-center text-lg">
-              {/* Checkmark (Included) - Red-themed */}
-              {isIncluded ? (
-                <svg
-                  className="w-6 h-6 mr-3 text-red-700 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="3"
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              ) : (
-                // X Mark (Excluded)
-                <svg
-                  className="w-6 h-6 mr-3 text-stone-500 flex-shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="3"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              )}
-              <span className={textColor}>{feature}</span>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-};
-
-// --- Main Component ---
-export default function InteractivePricingSection() {
-  // State to manage which card's features are currently displayed (defaults to Premium Support)
-  const [selectedTier, setSelectedTier] = useState<TierName>("Premium Support");
-
-  return (
-    <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-black min-h-screen">
+    <section className="relative py-16 px-4 sm:px-6 lg:py-24 lg:px-8 bg-black">
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Grid Container for Cards and Feature List */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 md:gap-16 items-start">
-          {/* Pricing Cards (2/3 width) - Click-Activated */}
-          <div className="lg:col-span-2 space-y-8">
-            {serviceTiers.map((tier) => (
-              <ServiceCard
-                key={tier.name}
-                tier={tier}
-                setSelectedTier={setSelectedTier}
-                isSelected={tier.name === selectedTier} // Pass the selection state
-              />
-            ))}
-          </div>
+        <h2 className="text-3xl lg:text-5xl font-extrabold text-stone-50 text-center mb-12 lg:mb-16">
+          Compare Our <span className="text-red-600">Service Packages</span>
+        </h2>
 
-          {/* Feature List (1/3 width) - Dynamic Display */}
-          <FeatureList tierName={selectedTier} />
+        {/* --- Comparison Table Structure (Semantic and Responsive) --- */}
+        {/* On mobile, it will be a simple stack. On desktop, it's a full grid/table. */}
+        
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-stone-800 border-collapse">
+            
+            {/* Table Header (Package Names & Taglines) */}
+            <thead className="sticky top-0 bg-black z-20">
+              <tr>
+                {/* Empty corner for the features column */}
+                <th className="w-[30%] lg:w-[40%] px-4 py-4 text-left text-sm font-semibold text-stone-400 uppercase tracking-wider">
+                  Features
+                </th>
+
+                {/* Package Headers */}
+                {serviceTiers.map((tier, index) => (
+                  <th
+                    key={tier.name}
+                    scope="col"
+                    className={`
+                      w-[20%] px-4 py-4 text-center 
+                      transition-all duration-300 rounded-t-lg
+                      ${tier.style === 'gradient' 
+                        ? 'bg-gradient-to-br from-red-800/80 to-black/80 text-white shadow-2xl shadow-red-900/50' 
+                        : 'bg-stone-900 text-stone-300'
+                      }
+                    `}
+                  >
+                    <h3 className="text-lg lg:text-xl font-extrabold mb-1">
+                      {tier.name}
+                    </h3>
+                    <p className={`text-xs ${tier.style === 'gradient' ? 'text-red-200' : 'text-stone-500'}`}>
+                      {tier.tagline}
+                    </p>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            
+            {/* Table Body (Feature Rows) */}
+            <tbody className="divide-y divide-stone-900">
+              {allFeatures.map((feature, featureIndex) => (
+                <tr 
+                  key={featureIndex} 
+                  className={`
+                    ${featureIndex % 2 === 0 ? 'bg-stone-950/50' : 'bg-stone-900/50'}
+                    hover:bg-stone-800 transition-colors duration-200
+                  `}
+                >
+                  {/* Feature Name (Row Header) */}
+                  <th scope="row" className="px-4 py-4 text-left font-medium text-white text-base lg:text-lg">
+                    {feature}
+                  </th>
+
+                  {/* Inclusion Cells (Package Columns) */}
+                  {serviceTiers.map((tier) => {
+                    const isIncluded = !tier.excludedFeatures.includes(feature);
+                    
+                    return (
+                      <td 
+                        key={`${tier.name}-${feature}`}
+                        className="px-4 py-4 text-center align-middle"
+                      >
+                        <div className="flex justify-center">
+                          <Icon isIncluded={isIncluded} />
+                        </div>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+        
+        <div className="text-center mt-12">
+            <p className="text-stone-400 text-sm italic">
+                Note: The Enterprise Custom tier is highly flexible and includes additional features not listed here.
+            </p>
+        </div>
+
       </div>
     </section>
   );

@@ -1,12 +1,22 @@
 'use client'
 import React, { useRef, useEffect, useState, useCallback } from 'react';
+// 1. PERFORMANCE: Import Next.js Image component for optimization
+import Image from 'next/image'; 
 import { Code, Palette, Smartphone, Globe, Database, Shield, Cpu, Cloud, Lock, Zap, Layers, Settings, X, Phone } from 'lucide-react';
-
-// Images are in the public folder, referenced as string paths
 
 const DEFAULT_GLOW_COLOR = '239, 68, 68'; // Red color
 
-// 1. AUGMENTED servicesData with fullDescription and contactLink
+// --- UTILITY FUNCTION (MUST BE KEPT CONSISTENT WITH FOOTER) ---
+const createSlug = (text: string): string => {
+    return text
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '') // Remove special characters
+        .trim()
+        .replace(/\s+/g, '-'); // Replace spaces with hyphens
+};
+// ----------------------------------------------------------------
+
+// 2. AUGMENTED servicesData (Retained previous optimization/A11y additions)
 const servicesData = [
     {
         id: 1,
@@ -17,6 +27,9 @@ const servicesData = [
         icon: Code,
         span: 'col-span-1 row-span-1',
         image: '/web.avif',
+        imageAlt: 'An abstract code structure representing modern web development', // SEO/A11y
+        width: 600, // PERFORMANCE: Explicit dimensions to prevent CLS
+        height: 350,
         fullDescription: 'We specialize in building high-performance, scalable web applications using modern frameworks like React, Next.js, and TypeScript. Our focus is on clean architecture, seamless user experience, and optimized performance for all devices. We handle everything from single-page applications to complex enterprise solutions.',
         contactLink: '/contact'
     },
@@ -34,7 +47,10 @@ const servicesData = [
         description: 'Beautiful, intuitive interfaces that users love',
         icon: Palette,
         span: 'col-span-1 row-span-1',
-        image: '/mobile.avif',
+        image: '/uiux.avif',
+        imageAlt: 'A palette and color swatches symbolizing creative UI UX design process', // SEO/A11y
+        width: 600,
+        height: 350,
         fullDescription: 'Our design philosophy centers on the user. We create beautiful, intuitive, and accessible user interfaces (UI) and conduct thorough user experience (UX) research to ensure your product is not just attractive, but genuinely easy and enjoyable to use. We deliver prototypes, wireframes, and final design assets.',
         contactLink: '/contact' // Example link
     },
@@ -46,9 +62,12 @@ const servicesData = [
         description: 'Native and cross-platform mobile applications',
         icon: Smartphone,
         span: 'col-span-1 row-span-1',
-        image: '/uiux.avif',
+        image: '/mobile.jpg',
+        imageAlt: 'Multiple mobile phone screens displaying app interfaces', // SEO/A11y
+        width: 600,
+        height: 350,
         fullDescription: 'Develop robust, high-quality mobile applications for iOS and Android. Whether you need native performance using Swift/Kotlin or cross-platform efficiency with React Native or Flutter, we deliver apps that leverage device capabilities for a superior mobile experience.',
-       contactLink: '/contact'
+        contactLink: '/contact'
     },
     {
         id: 5,
@@ -64,7 +83,10 @@ const servicesData = [
         description: 'Scalable cloud infrastructure and deployment',
         icon: Database,
         span: 'lg:col-span-2 row-span-1',
-        image: '/cloud.jpeg',
+        image: '/cloud.jpg',
+        imageAlt: 'Abstract representation of cloud computing infrastructure and data flow', // SEO/A11y
+        width: 900,
+        height: 350,
         fullDescription: 'Leverage the power of the cloud (AWS, Azure, GCP) to achieve unmatched scalability, reliability, and cost-efficiency. We provide consultation, migration, and management for cloud infrastructure, ensuring your application is always running optimally.',
         contactLink: '/contact'
     },
@@ -77,6 +99,9 @@ const servicesData = [
         icon: Globe,
         span: 'col-span-1 row-span-1',
         image: '/digital.avif',
+        imageAlt: 'Global map with data points and connections, symbolizing digital reach', // SEO/A11y
+        width: 600,
+        height: 350,
         fullDescription: 'We help define your digital roadmap. From market analysis and audience definition to content strategy and performance measurement, our data-driven approach ensures your digital presence is aligned with your business goals and delivers measurable results.',
         contactLink: '/contact'
     },
@@ -89,6 +114,9 @@ const servicesData = [
         icon: Settings,
         span: 'col-span-1 row-span-1',
         image: '/ap.avif',
+        imageAlt: 'Interconnected digital nodes, representing API and system integration', // SEO/A11y
+        width: 600,
+        height: 350,
         fullDescription: 'Integrate your core systems with essential third-party services, payment gateways, and external APIs. We build secure, reliable, and well-documented APIs to ensure seamless communication between different software systems, streamlining your business processes.',
         contactLink: '/contact'
     },
@@ -106,7 +134,10 @@ const servicesData = [
         description: 'Intelligent automation and machine learning',
         icon: Cpu,
         span: 'col-span-1 row-span-1',
-        image: '/ai.jpeg',
+        image: '/ai.jpg',
+        imageAlt: 'A futuristic human brain graphic with digital connections for AI and machine learning', // SEO/A11y
+        width: 600,
+        height: 350,
         fullDescription: 'Harness the power of Artificial Intelligence and Machine Learning to automate tasks, gain deeper insights from data, and create smarter products. Our services include model development, deployment, and integration for solutions like predictive analytics and natural language processing.',
         contactLink: '/contact'
     },
@@ -119,6 +150,9 @@ const servicesData = [
         icon: Cloud,
         span: 'col-span-1 row-span-1',
         image: '/devops.avif',
+        imageAlt: 'Flowchart diagram symbolizing Continuous Integration and Continuous Deployment (CI/CD) pipeline', // SEO/A11y
+        width: 600,
+        height: 350,
         fullDescription: 'Implement robust DevOps practices, including Continuous Integration and Continuous Deployment (CI/CD), infrastructure as code (IaC), and automated testing. This accelerates your release cycles, improves reliability, and ensures a smooth operational workflow.',
         contactLink: '/contact'
     },
@@ -137,6 +171,9 @@ const servicesData = [
         icon: Shield,
         span: 'col-span-1 row-span-1',
         image: '/cyber.avif',
+        imageAlt: 'A digital shield icon representing comprehensive cybersecurity protection', // SEO/A11y
+        width: 600,
+        height: 350,
         fullDescription: 'Protect your assets with comprehensive cybersecurity services. We offer penetration testing, security audits, compliance checks, and implementation of advanced security protocols to safeguard your application and user data against emerging threats.',
         contactLink: '/contact'
     },
@@ -149,8 +186,11 @@ const servicesData = [
         icon: Zap,
         span: 'lg:col-span-2 row-span-1',
         image: '/opt.webp',
+        imageAlt: 'A graphic representing high-speed data flow and system optimization', // SEO/A11y
+        width: 900,
+        height: 350,
         fullDescription: 'Maximize your application speed and efficiency. Our optimization services include code profiling, database tuning, caching strategies, and load balancing to ensure your product delivers a fast, seamless experience even under high traffic.',
-       contactLink: '/contact'
+        contactLink: '/contact'
     },
     {
         id: 15,
@@ -161,6 +201,9 @@ const servicesData = [
         icon: Lock,
         span: 'col-span-1 row-span-1',
         image: '/sec.avif',
+        imageAlt: 'A digital padlock icon over a secure database, representing data security', // SEO/A11y
+        width: 600,
+        height: 350,
         fullDescription: 'Ensure the confidentiality and integrity of your sensitive data. We implement industry-leading encryption standards, secure database configurations, and robust access control mechanisms to protect data both at rest and in transit.',
         contactLink: '/contact'
     },
@@ -179,6 +222,9 @@ const servicesData = [
         icon: Layers,
         span: 'col-span-1 row-span-1',
         image: '/sys.jpg',
+        imageAlt: 'Layered abstract design, symbolizing complex system architecture', // SEO/A11y
+        width: 600,
+        height: 350,
         fullDescription: 'Design resilient and scalable system architectures, transitioning from monolithic structures to modern microservices where appropriate. We focus on creating a foundation that can easily handle future growth and evolution of your business needs.',
         contactLink: '/contact'
     }
@@ -203,25 +249,33 @@ const createParticleElement = (x: number, y: number): HTMLDivElement => {
     return el;
 };
 
-// 2. NEW: ServiceDetailsModal Component
+// 3. AUGMENTED ServiceDetails for Image fields
 interface ServiceDetails extends Omit<typeof servicesData[0], 'icon'> {
     icon: React.ElementType;
     fullDescription: string;
     contactLink: string;
+    imageAlt: string; // Added imageAlt
+    width: number; // Added width
+    height: number; // Added height
 }
 
-const ServiceDetailsModal: React.FC<{ 
-    service: ServiceDetails | null; 
-    onClose: () => void 
+// 4. MODIFIED ServiceDetailsModal Component (A11y & Image Performance)
+const ServiceDetailsModal: React.FC<{ 
+    service: ServiceDetails | null; 
+    onClose: () => void 
 }> = ({ service, onClose }) => {
     if (!service) return null;
 
     return (
-        <div 
+        // A11Y: Added role and aria-modal for screen readers
+        <div 
             className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8 animate-fade-in"
             onClick={onClose}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
         >
-            <div 
+            <div 
                 className="w-full max-w-4xl bg-stone-900 border border-stone-800 rounded-3xl shadow-2xl overflow-hidden transform scale-95 opacity-0 sm:scale-100 sm:opacity-100 transition-all duration-300 ease-out"
                 onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
                 style={{ animation: 'slide-up-modal 0.5s ease-out forwards' }}
@@ -231,9 +285,12 @@ const ServiceDetailsModal: React.FC<{
                     <div className="relative p-6 sm:p-8 flex flex-col justify-between">
                         <div className="absolute inset-0">
                             {service.image && (
-                                <img 
-                                    src={service.image} 
-                                    alt={service.title} 
+                                // PERFORMANCE: Use Next.js Image component
+                                <Image 
+                                    src={service.image} 
+                                    alt={service.imageAlt} // SEO/A11y: Use descriptive alt text
+                                    width={service.width}
+                                    height={service.height}
                                     className="w-full h-full object-cover opacity-30 rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none"
                                 />
                             )}
@@ -241,21 +298,22 @@ const ServiceDetailsModal: React.FC<{
                         </div>
 
                         <div className="relative z-10">
-                            <service.icon className="w-8 h-8 text-red-500 mb-4" />
+                            <service.icon className="w-8 h-8 text-red-500 mb-4" aria-hidden="true" />
                             <span className="text-stone-400 text-sm font-medium px-3 py-1 bg-stone-800/50 rounded-full border border-stone-700 mb-2 inline-block">
                                 {service.label}
                             </span>
-                            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 leading-snug">{service.title}</h2>
+                            {/* A11Y: Title of modal */}
+                            <h2 id="modal-title" className="text-3xl sm:text-4xl font-bold text-white mb-4 leading-snug">{service.title}</h2>
                             <p className="text-stone-300 text-lg mb-6">{service.description}</p>
-                            
+                             
                             {/* Contact Button */}
-                            <a 
+                            <a 
                                 href={service.contactLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center justify-center px-6 py-3 border border-red-500 text-base font-semibold rounded-full text-white bg-red-600 hover:bg-red-700 transition-all duration-300 shadow-lg shadow-red-500/20"
                             >
-                                <Phone className="w-5 h-5 mr-3" />
+                                <Phone className="w-5 h-5 mr-3" aria-hidden="true" />
                                 Free Consultation
                             </a>
                         </div>
@@ -267,29 +325,30 @@ const ServiceDetailsModal: React.FC<{
                         <p className="text-stone-400 text-base leading-relaxed mb-8 flex-grow">
                             {service.fullDescription}
                         </p>
-                        
+                         
                         <button
                             onClick={onClose}
                             className="w-full py-3 border border-stone-700 rounded-xl text-stone-300 hover:text-white hover:bg-stone-800 transition-all duration-200 mt-4 flex items-center justify-center"
+                            aria-label={`Close details for ${service.title}`} // A11Y: Descriptive aria-label
                         >
-                            <X className="w-5 h-5 mr-2" />
+                            <X className="w-5 h-5 mr-2" aria-hidden="true" />
                             Close Details
                         </button>
                     </div>
                 </div>
-                
+                 
                 {/* Top Right Close Button for convenience on larger screens */}
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 p-2 bg-stone-800/80 hover:bg-stone-700/80 backdrop-blur-sm rounded-full text-white transition-all duration-300"
-                    aria-label="Close"
+                    aria-label="Close" // A11Y: Simple aria-label for icon button
                 >
-                    <X className="w-6 h-6" />
+                    <X className="w-6 h-6" aria-hidden="true" />
                 </button>
             </div>
-            
-            {/* Custom Modal Animation CSS */}
+             
             <style jsx global>{`
+                /* ... (Original Modal CSS) ... */
                 @keyframes slide-up-modal {
                     from {
                         opacity: 0;
@@ -313,18 +372,18 @@ const ServiceDetailsModal: React.FC<{
 };
 
 
-// 3. MODIFIED ServiceCard Component
-const ServiceCard: React.FC<{ 
-    service: typeof servicesData[0]; 
+// 5. MODIFIED ServiceCard Component (A11y, Performance, Mobile Hiding, ANCHOR LINKS)
+const ServiceCard: React.FC<{ 
+    service: typeof servicesData[0]; 
     index: number;
-    onClick: (service: typeof servicesData[0]) => void; // New prop for click handler
+    onClick: (service: typeof servicesData[0]) => void;
 }> = ({ service, index, onClick }) => {
-    const cardRef = useRef<HTMLDivElement>(null); // Changed back to DivElement
+    const cardRef = useRef<HTMLDivElement>(null);
     const particlesRef = useRef<HTMLDivElement[]>([]);
     const isHoveredRef = useRef(false);
     const [isVisible, setIsVisible] = useState(false);
 
-    // ... (Particle and intersection observer logic remains the same, adjusted to DivElement) ...
+    // ... (Particle and intersection observer logic remains the same) ...
     const clearParticles = useCallback(() => {
         particlesRef.current.forEach(p => p.remove());
         particlesRef.current = [];
@@ -410,30 +469,40 @@ const ServiceCard: React.FC<{
     }, [animateParticles, clearParticles]);
 
 
-    // Return a Div with an onClick handler
+    // Determine the class to hide image-only divs on mobile
+    const mobileHideClass = service.type === 'image-only' ? 'hidden md:block' : '';
+    
+    // Determine the ID for text-type services (ANCHOR LINK IMPLEMENTATION)
+    const serviceId = service.type === 'text' ? createSlug(service.title) : undefined;
+
+
     return (
+        // A11y: Added role="button" and tabIndex={0} for keyboard navigation, conditional on type='text'
         <div
             ref={cardRef}
+            id={serviceId} // <--- ANCHOR ID IMPLEMENTED HERE for footer linking
             // Only clickable for service.type === 'text'
             onClick={service.type === 'text' ? () => onClick(service) : undefined}
+            role={service.type === 'text' ? 'button' : undefined}
+            tabIndex={service.type === 'text' ? 0 : undefined}
+            aria-label={service.type === 'text' ? `View detailed description for ${service.title}` : undefined} // A11y
             className={`service-card ${service.span} relative overflow-hidden rounded-2xl border border-stone-800 p-0 group ${service.type === 'text' ? 'cursor-pointer' : 'cursor-default'} transition-all duration-300 ease-in-out block ${isVisible ? 'animate-slide-up' : 'opacity-0'
-                } ${service.type === 'text' ? 'bg-black' : 'bg-gradient-to-br from-stone-700 to-black'}`}
+                } ${service.type === 'text' ? 'bg-black' : 'bg-gradient-to-br from-stone-700 to-black'} ${mobileHideClass}`}
             style={{
                 aspectRatio: service.type === 'image-only' ? '1 / 1' : undefined,
                 minHeight: '180px',
                 animationDelay: `${index * 100}ms`,
             }}
         >
-            {/* Image-Only Card Content (NO CHANGE) */}
+            {/* Image-Only Card Content (purely decorative, hidden on mobile for performance/A11y) */}
             {service.type === 'image-only' && (
-                <div className="absolute inset-0 p-6">
+                <div className="absolute inset-0 p-6" aria-hidden="true"> {/* A11y: aria-hidden for screen readers */}
                     {service.imageType === 'gradient-mesh' && (
                         <div className="w-full h-full relative">
                             <div className="absolute inset-0 bg-gradient-to-br from-red-500/30 via-stone-500/20 to-red-600/30 blur-2xl animate-pulse-slow" />
                             <div className="absolute inset-0 bg-gradient-to-tl from-red-600/20 via-transparent to-stone-500/20 blur-xl animate-pulse-slow" style={{ animationDelay: '1s' }} />
                         </div>
                     )}
-
                     {service.imageType === 'abstract-shapes' && (
                         <div className="w-full h-full flex items-center justify-center">
                             <div className="relative w-24 h-24">
@@ -443,7 +512,6 @@ const ServiceCard: React.FC<{
                             </div>
                         </div>
                     )}
-
                     {service.imageType === 'geometric-pattern' && (
                         <div className="w-full h-full grid grid-cols-3 grid-rows-3 gap-2">
                             {[...Array(9)].map((_, i) => (
@@ -458,7 +526,6 @@ const ServiceCard: React.FC<{
                             ))}
                         </div>
                     )}
-
                     {service.imageType === 'wave-pattern' && (
                         <div className="w-full h-full flex flex-col justify-center gap-3">
                             {[...Array(5)].map((_, i) => (
@@ -470,7 +537,6 @@ const ServiceCard: React.FC<{
                             ))}
                         </div>
                     )}
-
                     {service.imageType === 'dots-grid' && (
                         <div className="w-full h-full grid grid-cols-5 grid-rows-5 gap-3 p-2">
                             {[...Array(25)].map((_, i) => (
@@ -488,7 +554,7 @@ const ServiceCard: React.FC<{
                 </div>
             )}
 
-            {/* Text Card Content - MODIFIED (no change from your original text content logic) */}
+            {/* Text Card Content */}
             {service.type === 'text' && (
                 <div className="p-4 h-full flex flex-col justify-between">
                     <div className="flex justify-between items-start">
@@ -496,11 +562,11 @@ const ServiceCard: React.FC<{
                             {service.label}
                         </span>
                         <div className="p-2 bg-stone-800/50 rounded-lg border border-stone-700 group-hover:border-red-500/30 group-hover:scale-110 transition-all duration-300">
-                            {service.icon && <service.icon className="w-5 h-5 text-stone-400 group-hover:text-red-400 group-hover:rotate-12 transition-all duration-300" />}
+                            {service.icon && <service.icon className="w-5 h-5 text-stone-400 group-hover:text-red-400 group-hover:rotate-12 transition-all duration-300" aria-hidden="true" />}
                         </div>
                     </div>
 
-                    {/* Placeholder for the large white square with the image */}
+                    {/* Image block using Next.js Image */}
                     <div className="relative w-full flex-grow mx-auto mt-4 mb-4 rounded-xl overflow-hidden shadow-xl"
                         style={{
                             backgroundColor: 'stone-950',
@@ -508,15 +574,16 @@ const ServiceCard: React.FC<{
                             aspectRatio: '16/9',
                             maxHeight: '350px'
                         }}>
-                        {/* The image is now conditionally rendered using the imported module */}
-                        {service.image && (
-                            <img
+                        {service.image && service.width && service.height && (
+                            <Image
                                 src={service.image}
-                                alt={service.title}
+                                alt={service.imageAlt || service.title} // SEO/A11y
+                                width={service.width} // PERFORMANCE
+                                height={service.height} // PERFORMANCE
+                                loading="lazy" // PERFORMANCE: Lazy load
                                 className="absolute inset-0 w-full h-full object-cover rounded-xl "
                             />
                         )}
-
                     </div>
 
                     <div className="transform group-hover:translate-y-[-4px] transition-transform duration-300 mt-auto">
@@ -526,7 +593,7 @@ const ServiceCard: React.FC<{
                 </div>
             )}
 
-            {/* Mouse tracking glow - Applied to both types */}
+            {/* Mouse tracking glow (Decorative) */}
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
                 <div
                     className="absolute w-64 h-64 rounded-full blur-3xl"
@@ -536,18 +603,20 @@ const ServiceCard: React.FC<{
                         top: 'var(--mouse-y, 50%)',
                         transform: 'translate(-50%, -50%)'
                     }}
+                    aria-hidden="true" 
                 />
             </div>
 
-            {/* Hover Overlay - Applied to both types */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-red-600/10 to-transparent" />
+            {/* Hover Overlay (Decorative) */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-red-600/10 to-transparent" aria-hidden="true" />
         </div>
     );
 };
 
 
-// 4. MODIFIED ServicesBento Component
+// 6. ServicesBento Component 
 const ServicesBento = () => {
+    // ... (State and Ref definitions)
     const gridRef = useRef<HTMLDivElement>(null);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [isHovering, setIsHovering] = useState(false);
@@ -556,11 +625,33 @@ const ServicesBento = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedService, setSelectedService] = useState<ServiceDetails | null>(null);
 
+    // --- ANCHOR LINK JUMP LOGIC ---
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            // Wait for the component to render and then attempt to scroll
+            const timer = setTimeout(() => {
+                const element = document.getElementById(hash);
+                if (element) {
+                    // Use smooth scrolling and adjust for fixed headers if necessary
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    
+                    // OPTIONAL: Open the modal automatically if it's a known service, for a deeper link experience
+                    const serviceToOpen = servicesData.find(s => s.type === 'text' && createSlug(s.title) === hash);
+                    if (serviceToOpen) {
+                        openServiceModal(serviceToOpen);
+                    }
+                }
+            }, 500); // Small delay to ensure all cards have loaded and animations run
+            
+            return () => clearTimeout(timer);
+        }
+    }, []); // Run only on mount
+
     const openServiceModal = (service: typeof servicesData[0]) => {
         // Only open modal for 'text' type services, which contain the full info
         if (service.type === 'text') {
-             // Cast to ServiceDetails as we've confirmed the 'text' type objects have the extra props
-            setSelectedService(service as ServiceDetails); 
+            setSelectedService(service as ServiceDetails); 
             setIsModalOpen(true);
             document.body.style.overflow = 'hidden'; // Disable background scroll
         }
@@ -610,13 +701,13 @@ const ServicesBento = () => {
 
     return (
         <div className="relative bg-black min-h-screen py-20 overflow-hidden">
-            {/* Background Elements */}
-            <div className="absolute inset-0">
+            {/* Background Elements - A11y: Added aria-hidden as they are purely decorative */}
+            <div className="absolute inset-0" aria-hidden="true">
                 <div className="absolute top-20 left-20 w-64 h-64 bg-red-600/5 rounded-full blur-3xl animate-pulse-slow" />
                 <div className="absolute bottom-20 right-20 w-96 h-96 bg-stone-700/5 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }} />
             </div>
 
-            {/* Spotlight Effect */}
+            {/* Spotlight Effect - A11y: Added aria-hidden as it is purely decorative */}
             {isHovering && (
                 <div
                     className="fixed pointer-events-none z-50 transition-opacity duration-300"
@@ -629,12 +720,14 @@ const ServicesBento = () => {
                         background: `radial-gradient(circle, rgba(${DEFAULT_GLOW_COLOR}, 0.08) 0%, rgba(${DEFAULT_GLOW_COLOR}, 0.04) 25%, transparent 70%)`,
                         opacity: 0.6
                     }}
+                    aria-hidden="true"
                 />
             )}
 
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 {/* Section Header */}
                 <div className="text-center mb-16">
+                    {/* SEO: Ensure hierarchy is correct (e.g., this H2 is the main heading) */}
                     <div className="inline-flex items-center px-4 py-2 bg-red-600/10 border border-red-600/30 rounded-full mb-6 animate-fade-in">
                         <span className="text-red-400 text-sm font-medium">What We Offer</span>
                     </div>
@@ -662,14 +755,14 @@ const ServicesBento = () => {
                     ))}
                 </div>
             </div>
-            
+             
             {/* NEW: Render the Modal component */}
             {isModalOpen && (
                 <ServiceDetailsModal service={selectedService} onClose={closeServiceModal} />
             )}
 
             <style jsx>{`
-                /* Your original CSS styles remain here */
+                /* ... (Original CSS styles remain here) ... */
                 @keyframes slide-up {
                     from {
                         opacity: 0;
@@ -730,6 +823,8 @@ const ServicesBento = () => {
                     --mouse-y: 50%;
                     grid-column: span 1;
                     grid-row: span 1;
+                    /* Ensure scroll margin/padding if you have a fixed header */
+                    scroll-margin-top: 100px; /* Adjust this value if you have a sticky header */
                 }
 
                 .service-card::after {

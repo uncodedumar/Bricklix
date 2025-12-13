@@ -69,7 +69,7 @@ export default function CTASection() {
               Ready to{' '}
               <span className="italic text-red-400 font-extralight text-gray-300">Scale</span>{' '}
               your<br className="hidden sm:block" />
-              brand to new{' '}
+               brand to new{' '}
               <span className="italic text-red-400 font-extralight text-gray-300">Heights</span>?
             </h1>
 
