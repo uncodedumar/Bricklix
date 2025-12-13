@@ -280,3 +280,124 @@
     @apply bg-background text-foreground;
     }
 }
+/* styles/TestimonialCarousel.css */
+
+/* ACCESSIBILITY: Hide content visually but keep it for screen readers */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.testimonial-carousel-container {
+    max-width: 600px; /* Define a max-width to control layout */
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    /* PERFORMANCE: Setting a fixed height or min-height prevents CLS */
+    /* This height must be large enough to contain the tallest card. */
+    min-height: 400px; 
+}
+
+.carousel-track-wrapper {
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    /* PERFORMANCE: Use cubic-bezier for a smooth transition */
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+    width: 100%; /* Total width will be 100% * number of slides */
+}
+
+.carousel-slide {
+    flex-shrink: 0;
+    width: 100%; /* Each slide takes up 100% of the wrapper's width */
+    padding: 20px;
+}
+
+.testimonial-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+}
+
+/* Card image wrapper - Crucial for CLS */
+.card-image-wrapper {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+    /* Next/Image handles the aspect ratio and dimension reservation */
+}
+
+.card-rating {
+    margin-bottom: 10px;
+}
+
+.card-review p {
+    font-style: italic;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.author-name {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* Controls */
+.carousel-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.carousel-button {
+    background: #000;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1.2em;
+    /* ACCESSIBILITY: Ensure a minimum target size */
+    min-width: 44px; 
+    min-height: 44px; 
+    transition: background-color 0.2s;
+}
+
+.carousel-button:hover {
+    background: #333;
+}
+
+.carousel-dots {
+    display: flex;
+    margin: 0 20px;
+}
+
+.carousel-dot {
+    background: #ccc;
+    border: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    padding: 0;
+    min-width: 10px; /* Override minimum target for dots if needed, but 44x44 is best */
+}
+
+.carousel-dot.active {
+    background: #0070f3;
+}
