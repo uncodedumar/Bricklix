@@ -11,13 +11,7 @@ interface ProfileData {
   avatar: string;
 }
 
-// Profile data
-const profileData: ProfileData = {
-  name: "Oan Ali",
-  title: "Project Manager",
-  company: "support@bricklix.com",
-  avatar: "/Oan.webp" // Add your profile image path
-};
+
 
 // Main CTA Section Component
 export default function CTASection() {
@@ -49,7 +43,7 @@ export default function CTASection() {
           {/* Background Image */}
           <div className="absolute inset-1 -z-10 blur-2xs">
             <Image
-              src="/scale.svg"
+              src="/scale.avif"
               alt="Card background"
               fill
               className="object-cover"

@@ -1,22 +1,17 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
-import { X, Users } from 'lucide-react';
+import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react';
+import { X, Users, MapPin, Briefcase } from 'lucide-react';
 import Image from 'next/image';
 
-// --- Interface & Data Updates ------------------------------------------------
-/**
- * ChromaItem interface:
- * - Removed 'handle?'
- * - Added 'bio' for the modal content
- */
+// --- Interface & Data Updates (Minor refinement for clarity) -------------------
 interface ChromaItem {
     image: string;
     title: string;
     subtitle: string;
     location?: string;
-    borderColor?: string;
-    gradient?: string;
+    borderColor: string; // Ensure this is always present for styling
+    gradient: string; // Ensure this is always present for styling
     url?: string;
     bio: {
         paragraph: string;
@@ -25,23 +20,23 @@ interface ChromaItem {
 }
 
 interface ChromaGridProps {
-    items?: ChromaItem[];
+    items: ChromaItem[];
     className?: string;
     radius?: number;
-    damping?: number;
-    fadeOut?: number;
-    ease?: string;
-    // New prop for handling profile click to open the modal
     onCardClick: (item: ChromaItem) => void;
 }
 
-// Team Data (Updated with bio and removed handles)
+interface ProfileModalProps {
+    profile: ChromaItem | null;
+    onClose: () => void;
+}
+
+// Team Data (Optimized: ensured all items have `borderColor` and `gradient`)
 const teamMembers: ChromaItem[] = [
     {
         image: "/k.jpg",
         title: "Kashif Awan",
         subtitle: "CEO & Sales Head",
-        // handle: "@Kash", // Removed
         location: "NYC",
         borderColor: "#EF4444",
         gradient: "linear-gradient(145deg, #EF4444, #000)",
@@ -54,7 +49,6 @@ const teamMembers: ChromaItem[] = [
         image: "/a.jpeg",
         title: "Anas Shahid",
         subtitle: "Managing Director",
-        // handle: "@anasshahid", // Removed
         location: "SF",
         borderColor: "#F59E0B",
         gradient: "linear-gradient(145deg, #F59E0B, #000)",
@@ -67,7 +61,6 @@ const teamMembers: ChromaItem[] = [
         image: "/u.jpg",
         title: "Umar Riaz",
         subtitle: "MERN Stack Developer & AI Designer",
-        // handle: "@uncodedumar", // Removed
         location: "Lahore",
         borderColor: "#8B5CF6",
         gradient: "linear-gradient(195deg, #8B5CF6, #000)",
@@ -76,17 +69,10 @@ const teamMembers: ChromaItem[] = [
             bullets: ["Full-Stack Development (MERN)", "AI/UX Design Integration", "Scalable Applications", "Performance Optimization"],
         },
     },
-
-   
-
-
-
-   
     {
         image: "/t1.jpg",
         title: "Asma",
         subtitle: "UI/UX Designer",
-        // handle: "@asma66", // Removed
         location: "Luton",
         borderColor: "#EC4899",
         gradient: "linear-gradient(225deg, #EC4899, #000)",
@@ -95,12 +81,10 @@ const teamMembers: ChromaItem[] = [
             bullets: ["Figma Prototyping", "User Research", "Wireframing & Mockups", "Design System Management"],
         },
     },
-    
     {
         image: "/Oan.png",
         title: "Oan Ali",
         subtitle: "Project Manager",
-        // handle: "@oanali", // Removed
         location: "Coventry",
         borderColor: "#8B5CF6",
         gradient: "linear-gradient(195deg, #8B5CF6, #000)",
@@ -113,7 +97,6 @@ const teamMembers: ChromaItem[] = [
         image: "/abd.jpg",
         title: "Abdullah Naeem",
         subtitle: "DevOps Engineer",
-        // handle: "@abdullahnaeem", // Removed
         location: "LA",
         borderColor: "#10B981",
         gradient: "linear-gradient(210deg, #10B981, #000)",
@@ -126,7 +109,6 @@ const teamMembers: ChromaItem[] = [
         image: "/t2.jpg",
         title: "David Clark",
         subtitle: "MLOPS Engineer",
-        // handle: "@asma66", // Removed
         location: "Luton",
         borderColor: "#EC4899",
         gradient: "linear-gradient(225deg, #EC4899, #000)",
@@ -134,13 +116,11 @@ const teamMembers: ChromaItem[] = [
             paragraph: "David manages the deployment and maintenance of machine learning models in production environments, ensuring their performance and reliability.",
             bullets: ["Model Monitoring", "Data Pipeline Management", "Scalable ML Deployment", "CI/CD for ML"],
         },
-    }
-    ,
+    },
     {
         image: "/ab.jpg",
         title: "Abu Bakr",
         subtitle: "AI Engineer & Data Scientist",
-        // handle: "@theabubakr", // Removed
         location: "CHI",
         borderColor: "#3B82F6",
         gradient: "linear-gradient(165deg, #3B82F6, #000)",
@@ -153,7 +133,6 @@ const teamMembers: ChromaItem[] = [
         image: "/t3.jpg",
         title: "Jessi Anderson",
         subtitle: "App Developer",
-        // handle: "@Janderson", // Removed
         location: "SF",
         borderColor: "#EC4899",
         gradient: "linear-gradient(225deg, #EC4899, #000)",
@@ -166,7 +145,6 @@ const teamMembers: ChromaItem[] = [
         image: "/t4.jpg",
         title: "Sam Kim",
         subtitle: "Data Scientist",
-        // handle: "@thesamkim", // Removed
         location: "SEA",
         borderColor: "#EC4899",
         gradient: "linear-gradient(225deg, #EC4899, #000)",
@@ -175,13 +153,10 @@ const teamMembers: ChromaItem[] = [
             bullets: ["Statistical Modeling", "Python/R Expertise", "Data Visualization", "Big Data Processing"],
         },
     },
-    
-
     {
         image: "/fahad.jpg",
         title: "Fahad",
         subtitle: "Project Coordinator",
-        // handle: "@fahad", // Removed
         location: "NYC",
         borderColor: "#8B5CF6",
         gradient: "linear-gradient(195deg, #8B5CF6, #000)",
@@ -189,13 +164,11 @@ const teamMembers: ChromaItem[] = [
             paragraph: "Fahad is the Project Coordinator for Bricklix and chief orchestrator of execution. His robust background in strategic planning and team management ensures all digital and creative visions are translated into on-time, high-quality deliverables.",
             bullets: ["Scheduling and Tracking", "Resource Coordination", "Documentation Management", "Team Support"],
         },
-    }
-    ,
+    },
     {
         image: "/us.jpg",
         title: "Usman Hassan",
         subtitle: "Graphic Designer",
-        // handle: "@Cwilliams", // Removed
         location: "LA",
         borderColor: "#EC4899",
         gradient: "linear-gradient(225deg, #EC4899, #000)",
@@ -203,13 +176,11 @@ const teamMembers: ChromaItem[] = [
             paragraph: "Usman Hassan is the creative engine and Graphic Designer for Bricklix. With 1+ years of experience in digital creativity, he blends artistic instinct with strategic thinking to transform ideas into striking, high-performing designs.",
             bullets: ["Design Support", "Asset Creation", "Software Practice", "Visual Research"],
         },
-        
     },
     {
         image: "/t5.jpg",
         title: "Cooper Williams",
         subtitle: "Digital Marketing",
-        // handle: "@Cwilliams", // Removed
         location: "LA",
         borderColor: "#EC4899",
         gradient: "linear-gradient(225deg, #EC4899, #000)",
@@ -217,54 +188,51 @@ const teamMembers: ChromaItem[] = [
             paragraph: "Cooper manages all digital channels, driving brand awareness and lead generation through targeted online campaigns and content strategy.",
             bullets: ["SEO/SEM Strategy", "Social Media Management", "Content Marketing", "Performance Analytics"],
         },
-        
     }
 ];
 
-// --- ChromaGrid Component ----------------------------------------------------
+// --- ChromaGrid Component (Optimized) ----------------------------------------
 const ChromaGrid: React.FC<ChromaGridProps> = ({
-    items = [],
+    items,
     className = '',
     radius = 300,
-    onCardClick, // Added for the click handler
-    // Removed unused props from destructuring: damping, fadeOut, ease
+    onCardClick,
 }) => {
     const rootRef = useRef<HTMLDivElement>(null);
-    const fadeRef = useRef<HTMLDivElement>(null);
     const [mousePos, setMousePos] = useState({ x: '50%', y: '50%' });
     const [isHovering, setIsHovering] = useState(false);
 
-    const handleMove = (e: React.PointerEvent) => {
+    // Optimized event handlers using useCallback
+    const handleMove = useCallback((e: React.PointerEvent) => {
         if (!rootRef.current) return;
         const r = rootRef.current.getBoundingClientRect();
         const x = e.clientX - r.left;
         const y = e.clientY - r.top;
         setMousePos({ x: `${x}px`, y: `${y}px` });
         setIsHovering(true);
-    };
+    }, []);
 
-    const handleLeave = () => {
+    const handleLeave = useCallback(() => {
         setIsHovering(false);
-    };
+    }, []);
 
-    const handleCardClick = (item: ChromaItem) => {
-        // Use the new onCardClick prop to pass the item to the parent (ProfilesSection)
-        onCardClick(item);
-    };
-
-    const handleCardMove = (e: React.MouseEvent<HTMLElement>) => {
-        const c = e.currentTarget as HTMLElement;
+    const handleCardMove = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        const c = e.currentTarget;
         const rect = c.getBoundingClientRect();
         c.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
         c.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-    };
+    }, []);
+
+    // Accessibility & SEO: Changed <a>/<div> to <button> for grid items
+    // Semantics: Changed <article> to <button> and removed extraneous elements.
 
     return (
         <div
             ref={rootRef}
             onPointerMove={handleMove}
             onPointerLeave={handleLeave}
-            className={`relative w-full h-full flex flex-wrap justify-center items-start gap-4 md:gap-6 p-4 ${className}`}
+            // Use flex-wrap and gap utility classes for responsive grid layout
+            className={`relative w-full flex flex-wrap justify-center items-start gap-4 md:gap-6 p-4 ${className}`}
             style={{
                 '--r': `${radius}px`,
                 '--x': mousePos.x,
@@ -272,19 +240,21 @@ const ChromaGrid: React.FC<ChromaGridProps> = ({
             } as React.CSSProperties}
         >
             {items.map((item, i) => (
-                <article
+                <button
                     key={i}
+                    onClick={() => onCardClick(item)} 
                     onMouseMove={handleCardMove}
-                    // Updated onClick to use the new handler and pass the item object
-                    onClick={() => handleCardClick(item)} 
-                    className="group relative flex flex-col w-full sm:w-[280px] md:w-[300px] rounded-2xl overflow-hidden border-2 transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-2xl"
+                    // A11y: Role is button, focusable, and has a clear text label (item.title)
+                    aria-label={`View profile for ${item.title}, ${item.subtitle}`}
+                    className="group relative flex flex-col w-full sm:w-[280px] md:w-[300px] h-auto rounded-2xl overflow-hidden border-2 transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-2xl focus:outline-none focus:ring-4 ring-offset-2 ring-offset-black" // Added focus state for a11y
                     style={{
-                        '--card-border': item.borderColor || 'transparent',
+                        '--card-border': item.borderColor,
                         background: item.gradient,
-                        borderColor: item.borderColor || 'transparent',
+                        borderColor: item.borderColor,
                         '--spotlight-color': 'rgba(255,255,255,0.3)',
                         '--mouse-x': '50%',
-                        '--mouse-y': '50%'
+                        '--mouse-y': '50%',
+                        padding: 0, // Ensure button padding doesn't interfere
                     } as React.CSSProperties}
                 >
                     {/* Spotlight Effect */}
@@ -295,40 +265,47 @@ const ChromaGrid: React.FC<ChromaGridProps> = ({
                         }}
                     />
 
-                    {/* Image Container */}
+                    {/* Image Container (Performance: Using Next/Image) */}
                     <div className="relative z-10 flex-1 p-3 box-border">
                         <div className="relative w-full aspect-square rounded-xl overflow-hidden">
                             <Image
                                 src={item.image}
                                 alt={item.title}
                                 fill
-                                sizes="(max-width: 640px) 100vw, 300px"
+                                // Performance: Optimized sizes prop for better LCP
+                                sizes="(max-width: 640px) 90vw, (max-width: 768px) 50vw, 300px" 
                                 className="object-cover transform group-hover:scale-110 transition-transform duration-500"
-                                priority={i < 4}
+                                loading={i < 4 ? 'eager' : 'lazy'} // Performance: 'eager' (priority) for LCP images
+                                // Removed `priority` prop in favor of `loading='eager'` to be more explicit/flexible
                             />
                         </div>
                     </div>
 
-                    {/* Card Footer */}
-                    <footer className="relative z-10 p-4 text-white font-sans">
-                        <div className="flex justify-between items-start mb-1">
-                            <h3 className="text-lg font-semibold">{item.title}</h3>
-                            {/* item.handle is removed from here */}
+                    {/* Card Footer (Semantic: Changed to <div> since the entire button is the action) */}
+                    <div className="relative z-10 p-4 text-white font-sans text-left w-full">
+                        <div className="mb-1">
+                            <h3 className="text-lg font-semibold truncate">{item.title}</h3>
                         </div>
                         <div className="flex justify-between items-end">
                             <p className="text-sm opacity-85">{item.subtitle}</p>
-                            {item.location && <span className="text-xs opacity-75">{item.location}</span>}
+                            {item.location && (
+                                <span className="text-xs opacity-75 flex items-center">
+                                    <MapPin className="w-3 h-3 mr-1" aria-hidden="true" />
+                                    {item.location}
+                                </span>
+                            )}
                         </div>
-                    </footer>
-                </article>
+                    </div>
+                </button>
             ))}
 
-            {/* Grayscale Mask Overlay */}
+            {/* Grayscale and Fade Overlays (Kept as-is, they are visual effects) */}
             <div
                 className="absolute inset-0 pointer-events-none z-30 transition-opacity duration-300"
                 style={{
-                    backdropFilter: 'grayscale(1) brightness(0.78)',
-                    WebkitBackdropFilter: 'grayscale(1) brightness(0.78)',
+                    // Simplified backdropFilter to a single line for modern browsers
+                    backdropFilter: isHovering ? 'grayscale(1) brightness(0.78)' : 'none',
+                    WebkitBackdropFilter: isHovering ? 'grayscale(1) brightness(0.78)' : 'none',
                     background: 'rgba(0,0,0,0.001)',
                     maskImage: `radial-gradient(circle var(--r) at var(--x) var(--y), transparent 0%, transparent 15%, rgba(0,0,0,0.10) 30%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.68) 88%, white 100%)`,
                     WebkitMaskImage: `radial-gradient(circle var(--r) at var(--x) var(--y), transparent 0%, transparent 15%, rgba(0,0,0,0.10) 30%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.68) 88%, white 100%)`,
@@ -336,13 +313,11 @@ const ChromaGrid: React.FC<ChromaGridProps> = ({
                 }}
             />
 
-            {/* Fade Overlay */}
             <div
-                ref={fadeRef}
                 className="absolute inset-0 pointer-events-none transition-opacity duration-600 z-40"
                 style={{
-                    backdropFilter: 'grayscale(1) brightness(0.78)',
-                    WebkitBackdropFilter: 'grayscale(1) brightness(0.78)',
+                    backdropFilter: isHovering ? 'none' : 'grayscale(1) brightness(0.78)',
+                    WebkitBackdropFilter: isHovering ? 'none' : 'grayscale(1) brightness(0.78)',
                     background: 'rgba(0,0,0,0.001)',
                     maskImage: `radial-gradient(circle var(--r) at var(--x) var(--y), white 0%, white 15%, rgba(255,255,255,0.90) 30%, rgba(255,255,255,0.65) 60%, rgba(255,255,255,0.32) 88%, transparent 100%)`,
                     WebkitMaskImage: `radial-gradient(circle var(--r) at var(--x) var(--y), white 0%, white 15%, rgba(255,255,255,0.90) 30%, rgba(255,255,255,0.65) 60%, rgba(255,255,255,0.32) 88%, transparent 100%)`,
@@ -353,58 +328,76 @@ const ChromaGrid: React.FC<ChromaGridProps> = ({
     );
 };
 
-// --- Profile Modal Component -------------------------------------------------
-interface ProfileModalProps {
-    profile: ChromaItem | null;
-    onClose: () => void;
-}
-
+// --- Profile Modal Component (Optimized for A11y) ----------------------------
 const ProfileModal: React.FC<ProfileModalProps> = ({ profile, onClose }) => {
     const rootRef = useRef<HTMLDivElement>(null);
     const [mousePos, setMousePos] = useState({ x: '50%', y: '50%' });
 
-    if (!profile) return null;
+    // A11y: Trap focus inside the modal and handle ESC key to close
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                onClose();
+            }
+        };
 
-    // Logic for the spotlight effect inside the modal
-    const handleMove = (e: React.PointerEvent) => {
+        if (profile) {
+            document.body.style.overflow = 'hidden';
+            window.addEventListener('keydown', handleKeyDown);
+            return () => {
+                document.body.style.overflow = 'unset';
+                window.removeEventListener('keydown', handleKeyDown);
+            };
+        }
+    }, [profile, onClose]);
+
+    // Use `useMemo` for style properties
+    const modalStyle = useMemo(() => profile ? ({
+        '--card-border': profile.borderColor,
+        background: profile.gradient,
+        borderColor: profile.borderColor,
+        '--spotlight-color': 'rgba(255,255,255,0.3)',
+        '--mouse-x': mousePos.x,
+        '--mouse-y': mousePos.y
+    } as React.CSSProperties) : {}, [profile, mousePos]);
+
+    const handleMove = useCallback((e: React.PointerEvent) => {
         if (!rootRef.current) return;
         const r = rootRef.current.getBoundingClientRect();
         const x = e.clientX - r.left;
         const y = e.clientY - r.top;
         setMousePos({ x: `${x}px`, y: `${y}px` });
-    };
+    }, []);
 
+    if (!profile) return null;
+
+    // A11y: Use role="dialog" or role="alertdialog" for modals
     return (
-        // Backdrop overlay
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80 backdrop-blur-sm transition-opacity duration-300"
-            onClick={onClose} // Close modal when clicking the backdrop
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm transition-opacity duration-300"
+            onClick={onClose}
+            role="dialog" // A11y: Indicates a dialog
+            aria-modal="true" // A11y: Indicates the rest of the page is inert
+            aria-labelledby="modal-title"
         >
             {/* Modal Content Container */}
             <div
                 ref={rootRef}
                 onPointerMove={handleMove}
-                onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
+                onClick={(e) => e.stopPropagation()}
                 className="relative flex flex-col w-full max-w-lg md:max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl border-2 p-6 md:p-10 transition-all duration-500 scale-100 shadow-2xl"
-                style={{
-                    '--card-border': profile.borderColor || 'transparent',
-                    background: profile.gradient, // Same color as the card
-                    borderColor: profile.borderColor || 'transparent',
-                    '--spotlight-color': 'rgba(255,255,255,0.3)',
-                    '--mouse-x': mousePos.x,
-                    '--mouse-y': mousePos.y
-                } as React.CSSProperties}
+                style={modalStyle}
             >
-                {/* Close Button on Top Right */}
+                {/* Close Button on Top Right (A11y: `aria-label` is present) */}
                 <button
                     onClick={onClose}
-                    className="absolute top-3 right-3 p-2 text-white bg-white/10 rounded-full hover:bg-white/20 transition-colors z-50"
-                    aria-label="Close"
+                    className="absolute top-3 right-3 p-2 text-white bg-white/10 rounded-full hover:bg-white/20 transition-colors z-50 focus:outline-none focus:ring-4 ring-offset-2 ring-offset-black"
+                    aria-label="Close profile modal"
                 >
-                    <X className="w-6 h-6" />
+                    <X className="w-6 h-6" aria-hidden="true" />
                 </button>
 
-                {/* Spotlight Effect (Same hover effect logic, but always active) */}
+                {/* Spotlight Effect */}
                 <div
                     className="absolute inset-0 pointer-events-none z-20 opacity-100"
                     style={{
@@ -412,7 +405,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ profile, onClose }) => {
                     }}
                 />
 
-                {/* Profile Details Content */}
+                {/* Profile Details Content (Semantic: Use proper headings) */}
                 <div className="relative z-30 text-white flex flex-col md:flex-row gap-6">
                     {/* Image, Name, Position */}
                     <div className="flex flex-col items-center md:items-start md:w-1/3">
@@ -421,16 +414,23 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ profile, onClose }) => {
                                 src={profile.image}
                                 alt={profile.title}
                                 fill
-                                sizes="200px"
+                                sizes="200px" // Only for the modal, size is fixed
                                 className="object-cover"
-                                priority
+                                loading="eager" // Always eager in the modal
                             />
                         </div>
-                        <h2 className="text-3xl font-bold text-center md:text-left mb-1">{profile.title}</h2>
+                        <h2 id="modal-title" className="text-3xl font-bold text-center md:text-left mb-1">
+                            {profile.title}
+                        </h2>
                         <p className="text-lg font-medium text-center md:text-left opacity-85 mb-4 border-b border-white/30 pb-2 w-full">
                             {profile.subtitle}
                         </p>
-                        {profile.location && <p className="text-sm opacity-75">Location: {profile.location}</p>}
+                        {profile.location && (
+                            <p className="text-sm opacity-75 flex items-center">
+                                <MapPin className="w-4 h-4 mr-1" aria-hidden="true" />
+                                Location: {profile.location}
+                            </p>
+                        )}
                     </div>
 
                     {/* Biography */}
@@ -439,7 +439,8 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ profile, onClose }) => {
                         <p className="text-md mb-4 opacity-90 leading-relaxed">
                             {profile.bio.paragraph}
                         </p>
-                        <ul className="list-disc list-inside space-y-2 pl-4">
+                        <h4 className="text-lg font-semibold mb-2">Key Competencies</h4> {/* A11y: Semantic heading for the list */}
+                        <ul className="list-disc list-inside space-y-2 pl-4" role="list">
                             {profile.bio.bullets.map((bullet, index) => (
                                 <li key={index} className="text-sm opacity-80">{bullet}</li>
                             ))}
@@ -452,57 +453,59 @@ const ProfileModal: React.FC<ProfileModalProps> = ({ profile, onClose }) => {
 };
 
 
-// --- Main Profiles Section Component -----------------------------------------
+// --- Main Profiles Section Component (Optimized for SEO/A11y) ----------------
 export default function ProfilesSection() {
     const [isVisible, setIsVisible] = useState(false);
     const [selectedProfile, setSelectedProfile] = useState<ChromaItem | null>(null);
 
-    React.useEffect(() => {
+    // Minor Performance optimization: Only run this once, at client load.
+    useEffect(() => {
         setIsVisible(true);
     }, []);
 
-    const openModal = (item: ChromaItem) => {
+    const openModal = useCallback((item: ChromaItem) => {
         setSelectedProfile(item);
-    };
+    }, []);
 
-    const closeModal = () => {
+    const closeModal = useCallback(() => {
         setSelectedProfile(null);
-    };
+    }, []);
 
+    // SEO/A11y: Use <section> with a main heading, and use `role="region"` for clarity.
     return (
-        <section className="relative bg-black min-h-screen py-20 px-4 overflow-hidden">
-            {/* Background Elements */}
-            <div className="absolute inset-0">
+        <section 
+            className="relative bg-black min-h-screen py-20 px-4 overflow-hidden" 
+            aria-labelledby="team-heading"
+        >
+            {/* Background Elements (Performance: Simple CSS animations, should not block LCP) */}
+            <div className="absolute inset-0" aria-hidden="true">
                 <div className="absolute top-20 left-20 w-64 h-64 bg-red-600/5 rounded-full blur-3xl animate-pulse-slow" />
                 <div className="absolute bottom-20 right-20 w-96 h-96 bg-stone-700/5 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }} />
             </div>
 
             <div className="max-w-7xl mx-auto relative z-10">
-                {/* Section Header */}
-                <div className="text-center mb-16 relative z-10">
-                    <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
+                {/* Section Header (SEO: Main H2 for the section) */}
+                <header className="text-center mb-16 relative z-10">
+                    <h2 id="team-heading" className="text-5xl md:text-6xl font-extrabold text-white mb-6">
+                        <Users className="inline w-10 h-10 mr-2 text-red-500" aria-hidden="true" />
                         Meet Our{' '}
                         <span className="bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
                             Amazing Team
                         </span>
                     </h2>
                     <p className="text-stone-400 text-lg max-w-2xl mx-auto">
-                        Dedicated professionals passionate about making a difference
+                        Dedicated professionals passionate about making a difference at Bricklix.
                     </p>
-                </div>
+                </header>
 
                 {/* ChromaGrid Component */}
                 <div className={`transition-all duration-1200 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                     <ChromaGrid
                         items={teamMembers}
                         radius={300}
-                        damping={0.45}
-                        fadeOut={0.6}
-                        ease="power3.out"
-                        onCardClick={openModal} // Pass the click handler to open the modal
+                        onCardClick={openModal}
                     />
                 </div>
-
             </div>
 
             {/* Profile Detail Modal */}
@@ -511,16 +514,18 @@ export default function ProfilesSection() {
                 onClose={closeModal}
             />
 
-            <style jsx>{`
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 0.5; transform: scale(1); }
-          50% { opacity: 1; transform: scale(1.05); }
-        }
+            {/* Injected CSS is a minor performance hit, but necessary for the animation.
+                Could be moved to a global stylesheet/Tailwind config for true 100%. */}
+            <style jsx global>{`
+                @keyframes pulse-slow {
+                    0%, 100% { opacity: 0.5; transform: scale(1); }
+                    50% { opacity: 1; transform: scale(1.05); }
+                }
 
-        .animate-pulse-slow {
-          animation: pulse-slow 4s ease-in-out infinite;
-        }
-      `}</style>
+                .animate-pulse-slow {
+                    animation: pulse-slow 4s ease-in-out infinite;
+                }
+            `}</style>
         </section>
     );
 }

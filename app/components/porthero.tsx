@@ -33,16 +33,14 @@ const PortfolioCard: React.FC<{ title: string; imagePath: string }> = ({ title, 
 export default function PortfolioCarousel() {
     const cards = [
      
-        { title: '', src: "/pt2.svg" },
-        { title: '', src: "/pt3.svg" },
-        { title: '', src: "/pt4.svg" },
-        { title: '', src: "/pt5.svg" },
-        { title: '', src: "/pt6.svg" },
-        { title: '', src: "/pt7.svg" },
-        { title: '', src: "/pt8.svg" },
-        { title: '', src: "/pt9.svg" },
-        { title: '', src: "/pt10.svg" }
-    ];
+        { title: '', src: "/pt1.avif" },
+        { title: '', src: "/pt2.avif" },
+        { title: '', src: "/pt3.avif" },
+        { title: '', src: "/pt4.avif" },
+        { title: '', src: "/pt5.avif" },
+        { title: '', src: "/pt6.avif" },
+        { title: '', src: "/pt7.avif" },
+        { title: '', src: "/pt8.avif" }    ];
 
     const carouselInnerRef = useRef<HTMLDivElement>(null);
     // Ref structure to hold the continuous animation state

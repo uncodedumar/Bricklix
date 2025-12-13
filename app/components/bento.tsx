@@ -185,7 +185,7 @@ const servicesData = [
         description: 'Speed and performance enhancement',
         icon: Zap,
         span: 'lg:col-span-2 row-span-1',
-        image: '/opt.webp',
+        image: '/opt.jpg',
         imageAlt: 'A graphic representing high-speed data flow and system optimization', // SEO/A11y
         width: 900,
         height: 350,
