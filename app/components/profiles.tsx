@@ -83,7 +83,7 @@ const teamMembers: ChromaItem[] = [
 
    
     {
-        image: "/t1.webp",
+        image: "/t1.jpg",
         title: "Asma",
         subtitle: "UI/UX Designer",
         // handle: "@asma66", // Removed
@@ -110,7 +110,7 @@ const teamMembers: ChromaItem[] = [
         },
     },
     {
-        image: "/abd.webp",
+        image: "/abd.jpg",
         title: "Abdullah Naeem",
         subtitle: "DevOps Engineer",
         // handle: "@abdullahnaeem", // Removed
@@ -123,7 +123,7 @@ const teamMembers: ChromaItem[] = [
         },
     },
     {
-        image: "/t2.webp",
+        image: "/t2.jpg",
         title: "David Clark",
         subtitle: "MLOPS Engineer",
         // handle: "@asma66", // Removed
@@ -137,7 +137,7 @@ const teamMembers: ChromaItem[] = [
     }
     ,
     {
-        image: "/ab.webp",
+        image: "/ab.jpg",
         title: "Abu Bakr",
         subtitle: "AI Engineer & Data Scientist",
         // handle: "@theabubakr", // Removed
@@ -150,7 +150,7 @@ const teamMembers: ChromaItem[] = [
         },
     },
     {
-        image: "/t3.webp",
+        image: "/t3.jpg",
         title: "Jessi Anderson",
         subtitle: "App Developer",
         // handle: "@Janderson", // Removed
@@ -163,7 +163,7 @@ const teamMembers: ChromaItem[] = [
         },
     },
     {
-        image: "/t4.webp",
+        image: "/t4.jpg",
         title: "Sam Kim",
         subtitle: "Data Scientist",
         // handle: "@thesamkim", // Removed
@@ -206,7 +206,7 @@ const teamMembers: ChromaItem[] = [
         
     },
     {
-        image: "/t5.webp",
+        image: "/t5.jpg",
         title: "Cooper Williams",
         subtitle: "Digital Marketing",
         // handle: "@Cwilliams", // Removed

@@ -75,7 +75,7 @@ const cardData: CardData[] = [
     id: 1,
     title: "Advanced Analytics",
     description: "Unlock powerful insights with our comprehensive analytics platform that transforms your data into actionable intelligence.",
-    image: "/7.webp",
+    image: "/7.jpg",
     imageAlt: "Analytics dashboard",
     tag: "Data Science"
   },
@@ -83,7 +83,7 @@ const cardData: CardData[] = [
     id: 2,
     title: "Cloud Infrastructure",
     description: "Scalable cloud solutions designed to grow with your business while maintaining peak performance and security.",
-    image: "/8.webp",
+    image: "/8.jpg",
     imageAlt: "Cloud infrastructure",
     tag: "DevOps"
   },
@@ -91,7 +91,7 @@ const cardData: CardData[] = [
     id: 3,
     title: "AI Integration",
     description: "Seamlessly integrate artificial intelligence into your workflow to automate processes and enhance decision-making.",
-    image: "/9.webp",
+    image: "/9.jpg",
     imageAlt: "AI technology",
     tag: "Machine Learning"
   },
@@ -99,7 +99,7 @@ const cardData: CardData[] = [
     id: 4,
     title: "Security Solutions",
     description: "Enterprise-grade security measures that protect your digital assets while ensuring compliance and peace of mind.",
-    image: "/10.webp",
+    image: "/10.jpg",
     imageAlt: "Security systems",
     tag: "Cybersecurity"
   }

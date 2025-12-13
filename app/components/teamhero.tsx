@@ -18,14 +18,14 @@ interface TeamMember {
 const teamMembers: TeamMember[] = [
     {
         id: 1,
-        image: '/ab.webp',
+        image: '/ab.jpg',
         name: 'Abubakr',
         role: 'Ai Engineer & Data Scientist',
         color: 'from-red-800 to-stone-800'
     },
     {
         id: 2,
-        image: '/abd.webp', 
+        image: '/abd.jpg', 
         name: 'Abdullah',
         role: 'DevOps Engineer',
         color: 'from-stone-700 to-red-900'
@@ -61,7 +61,7 @@ const teamMembers: TeamMember[] = [
     },
     {
         id: 7,
-        image: '/t1.webp',
+        image: '/t1.jpg',
         name: 'Riley Johnson',
         role: 'Product Manager',
         color: 'from-red-700 to-stone-900'
@@ -75,14 +75,14 @@ const teamMembers: TeamMember[] = [
     },
     {
         id: 8,
-        image: '/t2.webp',
+        image: '/t2.jpg',
         name: 'Quinn Martinez',
         role: 'Data Analyst',
         color: 'from-stone-800 to-red-800'
     },
     {
         id: 9,
-        image: '/t3.webp',
+        image: '/t3.jpg',
         name: 'Quinn Martinez',
         role: 'Data Analyst',
         color: 'from-stone-800 to-red-800'
@@ -90,7 +90,7 @@ const teamMembers: TeamMember[] = [
     ,
     {
         id: 10,
-        image: '/t4.webp',
+        image: '/t4.jpg',
         name: 'Quinn Martinez',
         role: 'Data Analyst',
         color: 'from-stone-800 to-red-800'
@@ -99,7 +99,7 @@ const teamMembers: TeamMember[] = [
     ,
     {
         id: 11,
-        image: '/t5.webp',
+        image: '/t5.jpg',
         name: 'Quinn Martinez',
         role: 'Data Analyst',
         color: 'from-stone-800 to-red-800'

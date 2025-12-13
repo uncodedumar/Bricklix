@@ -163,7 +163,7 @@ const cardData: CardData[] = [
         id: 1,
         title: "Creative Design",
         description: "Transform your vision into stunning visual experiences with our innovative design solutions. We craft memorable brands that resonate with your audience and drive meaningful engagement.",
-        image: "/4.webp",
+        image: "/4.jpg",
         altText: "Creative design workspace",
         captionText: "Hover to explore creative possibilities"
     },
@@ -171,7 +171,7 @@ const cardData: CardData[] = [
         id: 2,
         title: "Digital Innovation",
         description: "Stay ahead of the curve with cutting-edge digital strategies that revolutionize your business processes. Our technology solutions are designed to scale with your ambitions.",
-        image: "/5.webp",
+        image: "/5.jpg",
         altText: "Digital innovation concept",
         captionText: "Discover the future of technology"
     },
@@ -179,7 +179,7 @@ const cardData: CardData[] = [
         id: 3,
         title: "Strategic Growth",
         description: "Unlock your potential with data-driven strategies that accelerate growth and maximize ROI. We partner with you to build sustainable success through intelligent planning.",
-        image: "/6.webp",
+        image: "/6.jpg",
         altText: "Strategic growth planning",
         captionText: "Navigate your path to success"
     }
