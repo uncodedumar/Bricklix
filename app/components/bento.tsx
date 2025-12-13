@@ -473,8 +473,9 @@ const ServiceCard: React.FC<{ 
     const mobileHideClass = service.type === 'image-only' ? 'hidden md:block' : '';
     
     // Determine the ID for text-type services (ANCHOR LINK IMPLEMENTATION)
-    const serviceId = service.type === 'text' ? createSlug(service.title) : undefined;
-
+    const serviceId = service.type === 'text' && service.title 
+    ? createSlug(service.title) 
+    : undefined;
 
     return (
         // A11y: Added role="button" and tabIndex={0} for keyboard navigation, conditional on type='text'
@@ -637,8 +638,7 @@ const ServicesBento = () => {
                     element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                     
                     // OPTIONAL: Open the modal automatically if it's a known service, for a deeper link experience
-                    const serviceToOpen = servicesData.find(s => s.type === 'text' && createSlug(s.title) === hash);
-                    if (serviceToOpen) {
+                    const serviceToOpen = servicesData.find(s => s.type === 'text' && s.title && createSlug(s.title) === hash);                    if (serviceToOpen) {
                         openServiceModal(serviceToOpen);
                     }
                 }
