@@ -168,7 +168,6 @@ const ServicesHero: React.FC = () => {
                 
                 /* PERFORMANCE: Load font from preload tag for LCP improvement */
                 /* In your main document <head>, you should add:
-                <link rel="preload" href="[FONT_URL]" as="font" type="font/woff2" crossorigin>
                 */
 
                 /* Keyframes for the slow pulse animation */

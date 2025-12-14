@@ -102,6 +102,7 @@ const Navbar: React.FC = () => {
             // Link styling: Using red and stone combinations
             className={`
               px-6 py-2 mx-1 text-sm font-semibold transition-all duration-200 rounded-full cursor-pointer
+              focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none
               ${isActive
                 // Active state: Light stone background, deep red text
                 ? 'bg-stone-200 text-red-800 shadow-md'
@@ -109,6 +110,7 @@ const Navbar: React.FC = () => {
                 : 'text-stone-400 hover:text-white hover:bg-stone-900/50'
               }
             `}
+            aria-current={isActive ? 'page' : undefined}
           >
             {link.name}
           </Link>
@@ -121,21 +123,27 @@ const Navbar: React.FC = () => {
     * Renders the mobile menu drawer.
     */
   const renderMobileMenu = () => (
-    <div
+      <div
+      id="mobile-menu"
       className={`
         fixed inset-0 z-[100] bg-black transition-transform duration-300 ease-in-out
         md:hidden
         ${isOpen ? 'translate-x-0' : 'translate-x-full'}
       `}
+      aria-hidden={!isOpen}
     >
       <div className="flex justify-between items-center p-4 border-b border-gray-800 h-16 bg-black">
         <Logo />
-        <button onClick={toggleMenu} className="p-2 text-white rounded-lg hover:bg-gray-800">
-          <CloseIcon />
+          <button 
+            onClick={toggleMenu} 
+            className="p-2 text-white rounded-lg hover:bg-gray-800 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none"
+            aria-label="Close navigation menu"
+          >
+          <CloseIcon aria-hidden="true" />
         </button>
       </div>
 
-      <nav className="flex flex-col p-6 space-y-4 bg-black min-h-screen">
+      <nav className="flex flex-col p-6 space-y-4 bg-black min-h-screen" aria-label="Mobile navigation">
         {navLinks.map((link) => {
           const isActive = pathname === link.href;
           return (
@@ -145,27 +153,31 @@ const Navbar: React.FC = () => {
               onClick={toggleMenu}
               className={`
                 py-3 text-xl font-medium rounded-lg text-left transition-colors duration-150
+                focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none
                 ${isActive
                   // Mobile Active state: Red text with red left border
                   ? 'text-red-400 border-l-4 border-red-500 pl-4'
                   : 'text-gray-300 hover:text-white pl-4'
                 }
               `}
+              aria-current={isActive ? 'page' : undefined}
             >
               {link.name}
             </Link>
           );
         })}
         {/* Mobile CTA Button */}
-        <Link
-          href="/contact"
-          onClick={toggleMenu}
-          className="mt-6 w-full text-center px-8 py-3 text-lg font-bold rounded-full 
+          <Link
+            href="/contact"
+            onClick={toggleMenu}
+            className="mt-6 w-full text-center px-8 py-3 text-lg font-bold rounded-full 
                      bg-gradient-to-r from-red-700 to-orange-500 
-                     hover:from-red-800 hover:to-orange-600 transition duration-300 shadow-lg"
-        >
-          Contact Us
-        </Link>
+                     hover:from-red-800 hover:to-orange-600 transition duration-300 shadow-lg
+                     focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none"
+            aria-label="Contact us"
+          >
+            Contact Us
+          </Link>
       </nav>
     </div>
   );
@@ -174,14 +186,15 @@ const Navbar: React.FC = () => {
     * Renders the logo element using Next.js Image component with bottom padding
     */
   const Logo = () => (
-    <Link href="/" className="flex items-center space-x-2 cursor-pointer pb-1">
+    <Link href="/" className="flex items-center space-x-2 cursor-pointer pb-1" aria-label="Bricklix Home">
       <Image
-        src="/logo.svg" // Replace with your actual logo path in the public folder
-        alt="Bricklix"
+        src="/logo.svg"
+        alt="Bricklix Logo"
         width={120}
         height={36}
         className="h-9 w-auto"
         priority
+        fetchPriority="high"
       />
     </Link>
   );
@@ -190,12 +203,14 @@ const Navbar: React.FC = () => {
     * Renders the large gradient CTA button for desktop.
     */
   const renderCTAButton = () => (
-    <Link
+      <Link
       href="/contact"
       className="hidden md:inline-block px-8 py-2 text-base font-bold text-white rounded-full 
                bg-gradient-to-r from-red-700 to-orange-500 
                hover:from-red-800 hover:to-orange-600 transition duration-300 
-               shadow-xl shadow-red-900/50 transform hover:scale-[1.02] active:scale-95"
+               shadow-xl shadow-red-900/50 transform hover:scale-[1.02] active:scale-95
+               focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none"
+      aria-label="Contact us"
     >
       Contact Us
     </Link>
@@ -211,7 +226,7 @@ const Navbar: React.FC = () => {
   `;
 
   return (
-    <header className={headerClasses}>
+    <header className={headerClasses} role="banner">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
 
@@ -227,10 +242,12 @@ const Navbar: React.FC = () => {
           {/* Mobile Menu Button (Hamburger) */}
           <button
             onClick={toggleMenu}
-            className="md:hidden p-2 text-white rounded-lg hover:bg-gray-800 focus:outline-none"
-            aria-label="Toggle navigation"
+            className="md:hidden p-2 text-white rounded-lg hover:bg-gray-800 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
           >
-            {isOpen ? <CloseIcon /> : <MenuIcon />}
+            {isOpen ? <CloseIcon aria-hidden="true" /> : <MenuIcon aria-hidden="true" />}
           </button>
         </div>
       </div>

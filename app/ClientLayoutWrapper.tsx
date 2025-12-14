@@ -1,31 +1,28 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import LoadingScreen from './components/loader';
+import dynamic from 'next/dynamic';
 
-export default function ClientLayoutWrapper({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+// Dynamically import LoadingScreen to reduce initial bundle size
+const LoadingScreen = dynamic(() => import('./components/loader'), {
+    ssr: false,
+});
+
+export default function ClientLayoutWrapper() {
     const [isLoading, setIsLoading] = useState(true);
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
         setIsMounted(true);
-        const timer = setTimeout(() => setIsLoading(false), 3500);
+        // Reduce loading time for better performance
+        const timer = setTimeout(() => setIsLoading(false), 2000);
         return () => clearTimeout(timer);
     }, []);
 
     // Don't render LoadingScreen during SSR
-    if (!isMounted) {
-        return <>{children}</>;
+    if (!isMounted || !isLoading) {
+        return null;
     }
 
-    return (
-        <>
-            {isLoading && <LoadingScreen />}
-            {children}
-        </>
-    );
+    return <LoadingScreen />;
 }

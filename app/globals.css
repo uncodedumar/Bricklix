@@ -201,6 +201,63 @@
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
+    
+    /* Bricklix Brand Colors - Available as Tailwind classes */
+    --color-red-50: var(--color-red-50);
+    --color-red-100: var(--color-red-100);
+    --color-red-200: var(--color-red-200);
+    --color-red-300: var(--color-red-300);
+    --color-red-400: var(--color-red-400);
+    --color-red-500: var(--color-red-500);
+    --color-red-600: var(--color-red-600);
+    --color-red-700: var(--color-red-700);
+    --color-red-800: var(--color-red-800);
+    --color-red-900: var(--color-red-900);
+    --color-red-950: var(--color-red-950);
+    --color-orange-400: var(--color-orange-400);
+    --color-orange-500: var(--color-orange-500);
+    --color-orange-600: var(--color-orange-600);
+    --color-stone-50: var(--color-stone-50);
+    --color-stone-100: var(--color-stone-100);
+    --color-stone-200: var(--color-stone-200);
+    --color-stone-300: var(--color-stone-300);
+    --color-stone-400: var(--color-stone-400);
+    --color-stone-500: var(--color-stone-500);
+    --color-stone-600: var(--color-stone-600);
+    --color-stone-700: var(--color-stone-700);
+    --color-stone-800: var(--color-stone-800);
+    --color-stone-900: var(--color-stone-900);
+    --color-stone-950: var(--color-stone-950);
+    --color-gray-50: var(--color-gray-50);
+    --color-gray-100: var(--color-gray-100);
+    --color-gray-200: var(--color-gray-200);
+    --color-gray-300: var(--color-gray-300);
+    --color-gray-400: var(--color-gray-400);
+    --color-gray-500: var(--color-gray-500);
+    --color-gray-600: var(--color-gray-600);
+    --color-gray-700: var(--color-gray-700);
+    --color-gray-800: var(--color-gray-800);
+    --color-gray-900: var(--color-gray-900);
+    --color-gray-950: var(--color-gray-950);
+    --color-black: var(--color-black);
+    --color-white: var(--color-white);
+    
+    /* Semantic Colors */
+    --color-brand-primary: var(--color-primary);
+    --color-brand-primary-hover: var(--color-primary-hover);
+    --color-brand-primary-light: var(--color-primary-light);
+    --color-brand-primary-dark: var(--color-primary-dark);
+    --color-brand-accent: var(--color-accent);
+    --color-brand-accent-hover: var(--color-accent-hover);
+    --color-text-primary: var(--color-text-primary);
+    --color-text-secondary: var(--color-text-secondary);
+    --color-text-muted: var(--color-text-muted);
+    --color-bg-primary: var(--color-bg-primary);
+    --color-bg-secondary: var(--color-bg-secondary);
+    --color-bg-card: var(--color-bg-card);
+    --color-border-primary: var(--color-border-primary);
+    --color-border-secondary: var(--color-border-secondary);
+    --color-focus-ring: var(--color-focus-ring);
 }
 
 :root {
@@ -236,6 +293,71 @@
     --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
     --sidebar-border: oklch(0.923 0.003 48.717);
     --sidebar-ring: oklch(0.709 0.01 56.259);
+    
+    /* Bricklix Brand Colors - Red Scale */
+    --color-red-50: #fef2f2;
+    --color-red-100: #fee2e2;
+    --color-red-200: #fecaca;
+    --color-red-300: #fca5a5;
+    --color-red-400: #f87171;
+    --color-red-500: #ef4444;
+    --color-red-600: #dc2626;
+    --color-red-700: #b91c1c;
+    --color-red-800: #991b1b;
+    --color-red-900: #7f1d1d;
+    --color-red-950: #450a0a;
+    
+    /* Orange Scale */
+    --color-orange-400: #fb923c;
+    --color-orange-500: #f97316;
+    --color-orange-600: #ea580c;
+    
+    /* Stone/Gray Scale */
+    --color-stone-50: #fafaf9;
+    --color-stone-100: #f5f5f4;
+    --color-stone-200: #e7e5e4;
+    --color-stone-300: #d6d3d1;
+    --color-stone-400: #a8a29e;
+    --color-stone-500: #78716c;
+    --color-stone-600: #57534e;
+    --color-stone-700: #44403c;
+    --color-stone-800: #292524;
+    --color-stone-900: #1c1917;
+    --color-stone-950: #0c0a09;
+    
+    /* Gray Scale */
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-300: #d1d5db;
+    --color-gray-400: #9ca3af;
+    --color-gray-500: #6b7280;
+    --color-gray-600: #4b5563;
+    --color-gray-700: #374151;
+    --color-gray-800: #1f2937;
+    --color-gray-900: #111827;
+    --color-gray-950: #030712;
+    
+    /* Base Colors */
+    --color-black: #000000;
+    --color-white: #ffffff;
+    
+    /* Semantic Color Mappings */
+    --color-primary: var(--color-red-600);
+    --color-primary-hover: var(--color-red-700);
+    --color-primary-light: var(--color-red-400);
+    --color-primary-dark: var(--color-red-800);
+    --color-accent: var(--color-orange-500);
+    --color-accent-hover: var(--color-orange-600);
+    --color-text-primary: var(--color-white);
+    --color-text-secondary: var(--color-gray-300);
+    --color-text-muted: var(--color-gray-400);
+    --color-bg-primary: var(--color-black);
+    --color-bg-secondary: var(--color-gray-900);
+    --color-bg-card: var(--color-stone-950);
+    --color-border-primary: var(--color-stone-800);
+    --color-border-secondary: var(--color-gray-800);
+    --color-focus-ring: var(--color-red-500);
 }
 
 .dark {
@@ -270,6 +392,23 @@
     --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
     --sidebar-border: oklch(1 0 0 / 10%);
     --sidebar-ring: oklch(0.553 0.013 58.071);
+    
+    /* Dark mode semantic colors remain the same */
+    --color-primary: var(--color-red-600);
+    --color-primary-hover: var(--color-red-700);
+    --color-primary-light: var(--color-red-400);
+    --color-primary-dark: var(--color-red-800);
+    --color-accent: var(--color-orange-500);
+    --color-accent-hover: var(--color-orange-600);
+    --color-text-primary: var(--color-white);
+    --color-text-secondary: var(--color-gray-300);
+    --color-text-muted: var(--color-gray-400);
+    --color-bg-primary: var(--color-black);
+    --color-bg-secondary: var(--color-gray-900);
+    --color-bg-card: var(--color-stone-950);
+    --color-border-primary: var(--color-stone-800);
+    --color-border-secondary: var(--color-gray-800);
+    --color-focus-ring: var(--color-red-500);
 }
 
 @layer base {

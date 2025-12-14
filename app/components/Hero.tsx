@@ -63,7 +63,11 @@ const OptimizedHero: React.FC = () => {
   ];
 
   const videoSrc = "/Herobg.mp4";
+<<<<<<< HEAD
   const imageFallbackSrc = "/Herobg-fallback.webp"; // Use a dedicated, optimized fallback image (WebP is better)
+=======
+  const imageFallbackSrc = "/hero.webp"; // Use existing optimized image
+>>>>>>> 28609f7 (lighthouse improvements)
 
   return (
     // Accessibility: Main role for the section, using a full-page semantic tag is good
@@ -79,34 +83,32 @@ const OptimizedHero: React.FC = () => {
             loop
             muted
             playsInline
-            // Performance: preload="none" or remove entirely if video is critical, but for background, let browser manage
+            preload="metadata"
+            // Performance: Use metadata preload to reduce initial load
             // Controls are not needed for a background video
-            // For production, use <source> tags with multiple formats (e.g., WebM, MP4) for cross-browser compatibility
-            src={videoSrc}
-            // Accessibility: Provide a text description for screen readers, or use aria-hidden if purely decorative.
             aria-hidden="true" 
-            onLoadedData={() => {
-              // Optional: You could use this to track performance
-            }}
             onError={() => {
               // Failback to Image
               setMediaFailed(true);
             }}
-          />
+          >
+            <source src={videoSrc} type="video/mp4" />
+          </video>
         ) : (
           /* Fallback to a static, optimized image */
           <Image
-            src={imageFallbackSrc} // Optimized image path
-            alt="Abstract digital background representing digital transformation" // Descriptive alt text
+            src={imageFallbackSrc}
+            alt=""
             fill
             className="object-cover opacity-70"
-            priority={true} // Performance: Use priority for LCP image
-            sizes="100vw" // Performance: Define sizes attribute for Next.js Image optimization
+            priority={true}
+            sizes="100vw"
+            aria-hidden="true"
           />
         )}
         
         {/* Overlay gradient for better text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" aria-hidden="true"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" aria-hidden="true" role="presentation"></div>
       </div>
 
       {/* 2. Main Content Wrapper */}
@@ -132,10 +134,10 @@ const OptimizedHero: React.FC = () => {
             </h1>
 
             {/* Small 'From idea to launch' text */}
-            <div className="mt-4 flex items-center text-lg font-light" aria-hidden="true">
+            <div className="mt-4 flex items-center text-lg font-light">
               {/* Decorative span, aria-hidden for accessibility */}
-              <span className="inline-block border border-red-500 rounded-full h-1 w-1 mr-4"></span>
-              From idea to launch
+              <span className="inline-block border border-red-500 rounded-full h-1 w-1 mr-4" aria-hidden="true" role="presentation"></span>
+              <span>From idea to launch</span>
             </div>
 
             {/* CTA Button and Description */}
@@ -144,7 +146,8 @@ const OptimizedHero: React.FC = () => {
               <Link
                 href="/contact"
                 onClick={() => handleAction("Get a free consultation")}
-                className="group relative flex items-center justify-center px-6 py-3 font-semibold text-lg bg-transparent border-2 border-white rounded-xl transition-all duration-300 hover:bg-white hover:text-black shadow-lg focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500" // Accessibility: Added focus-visible style
+                className="group relative flex items-center justify-center px-6 py-3 font-semibold text-lg bg-transparent border-2 border-white rounded-xl transition-all duration-300 hover:bg-white hover:text-black shadow-lg focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none"
+                aria-label="Get a free consultation - Contact us"
               >
                 Get a free consultation
                 <ArrowRight className="ml-3 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
@@ -155,16 +158,15 @@ const OptimizedHero: React.FC = () => {
               </p>
             </div>
 
-            {/* Statistics Boxes (Use a semantic list if they were links, but as info cards, divs are fine) */}
-            <div className="mt-20 flex flex-wrap gap-6" role="list">
+            {/* Statistics Boxes */}
+            <div className="mt-20 flex flex-wrap gap-6" role="list" aria-label="Company statistics">
               {/* 30+ services */}
               <article
-                className="w-full sm:w-64 p-6 rounded-2xl border-2 border-red-500/50 backdrop-blur-sm bg-red-900/10 cursor-pointer transition-all duration-300 hover:bg-red-900/30"
+                className="w-full sm:w-64 p-6 rounded-2xl border-2 border-red-500/50 backdrop-blur-sm bg-red-900/10 cursor-pointer transition-all duration-300 hover:bg-red-900/30 focus-within:ring-2 focus-within:ring-red-500 focus-within:outline-none"
                 role="listitem"
               >
-                {/* SEO: Wrap the entire card content in a single Link */}
-                <Link href="/services" className="block" onClick={() => handleAction("View 30+ services")}>
-                  <p className="text-4xl font-bold mb-2">30+</p>
+                <Link href="/services" className="block focus:outline-none" onClick={() => handleAction("View 30+ services")} aria-label="View our 30+ services">
+                  <p className="text-4xl font-bold mb-2" aria-label="30 plus">30+</p>
                   <h2 className="text-sm font-semibold mb-3 opacity-90">
                     Services Offered
                   </h2>
@@ -175,9 +177,9 @@ const OptimizedHero: React.FC = () => {
               </article>
 
               {/* 120+ projects */}
-              <article className="w-full sm:w-64 p-6 rounded-2xl border-2 border-white/20 backdrop-blur-sm bg-black/30 cursor-pointer transition-all duration-300 hover:bg-black/50" role="listitem">
-                <Link href="/portfolio" className="block" onClick={() => handleAction("View 120+ projects")}>
-                  <p className="text-4xl font-bold mb-2">120+</p>
+              <article className="w-full sm:w-64 p-6 rounded-2xl border-2 border-white/20 backdrop-blur-sm bg-black/30 cursor-pointer transition-all duration-300 hover:bg-black/50 focus-within:ring-2 focus-within:ring-white focus-within:outline-none" role="listitem">
+                <Link href="/portfolio" className="block focus:outline-none" onClick={() => handleAction("View 120+ projects")} aria-label="View our 120+ completed projects">
+                  <p className="text-4xl font-bold mb-2" aria-label="120 plus">120+</p>
                   <h2 className="text-sm font-semibold mb-3 opacity-90">
                     Projects Completed
                   </h2>
@@ -193,35 +195,35 @@ const OptimizedHero: React.FC = () => {
           <div className="lg:col-span-1 flex flex-col items-end justify-end space-y-6">
             
             {/* Automation Card (Semantic article tag) */}
-            <article className="w-full max-w-sm rounded-2xl p-6 bg-black/70 border border-red-500/50 backdrop-blur-md shadow-2xl transition-transform duration-300 hover:scale-[1.02] cursor-pointer" aria-labelledby="automation-card-title">
-              <div id="automation-card-title" className="sr-only">Automation and Team Card</div>
-              <div className="w-full h-32 rounded-lg mb-4 overflow-hidden bg-gradient-to-br from-red-900 to-rose-900 flex items-center justify-center" aria-hidden="true">
+            <article className="w-full max-w-sm rounded-2xl p-6 bg-black/70 border border-red-500/50 backdrop-blur-md shadow-2xl transition-transform duration-300 hover:scale-[1.02] focus-within:ring-2 focus-within:ring-red-500 focus-within:outline-none" aria-labelledby="automation-card-title">
+              <h3 id="automation-card-title" className="sr-only">Automation and Team Card</h3>
+              <div className="w-full h-32 rounded-lg mb-4 overflow-hidden bg-gradient-to-br from-red-900 to-rose-900 flex items-center justify-center" aria-hidden="true" role="presentation">
                 {/* Animated pulse effect */}
                 <div className="relative w-20 h-20">
-                  <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-75"></div>
+                  <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-75" aria-hidden="true"></div>
                   <div className="relative bg-red-600 rounded-full w-20 h-20 flex items-center justify-center">
-                    <span className="text-2xl" role="img" aria-label="Robot emoji">🤖</span>
+                    <span className="text-2xl" role="img" aria-label="Robot emoji representing automation">🤖</span>
                   </div>
                 </div>
               </div>
 
               <div className="text-center">
-                <h3 className="text-3xl font-extrabold text-red-400"> {/* SEO: Use H3 for structure */}
+                <h4 className="text-3xl font-extrabold text-red-400">
                   2K+ Automations
-                </h3>
+                </h4>
                 <Plus className="mx-auto my-3 w-5 h-5 text-red-400" aria-hidden="true" />
                 <p className="text-sm font-light opacity-80 mb-4">
                   We know how to get leads without blowing your budget
                 </p>
 
-                {/* Profile Avatars (Improved accessibility with a descriptive label) */}
+                {/* Profile Avatars */}
                 <div className="flex justify-center -space-x-2" role="group" aria-label="Team member profiles">
                   {profiles.map((p) => (
                     <ProfileAvatar
                       key={p.id}
                       name={p.name}
                       src={p.imageUrl}
-                      alt={p.alt} // Passed proper alt text
+                      alt={p.alt}
                       className="hover:z-10 transition-all duration-300"
                     />
                   ))}
@@ -237,21 +239,25 @@ const OptimizedHero: React.FC = () => {
                   <Link
                     href="https://www.linkedin.com/company/bricklix"
                     aria-label="Follow us on LinkedIn"
-                    className="flex items-center justify-center w-full sm:w-16 h-16 bg-black/60 border border-white/20 rounded-xl transition-all duration-300 hover:bg-white/10 hover:border-red-500/50 group focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center w-full sm:w-16 h-16 bg-black/60 border border-white/20 rounded-xl transition-all duration-300 hover:bg-white/10 hover:border-red-500/50 group focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none"
                   >
                     <Linkedin className="w-6 h-6 group-hover:text-blue-400" aria-hidden="true" />
                   </Link>
                 </li>
 
-                {/* Instagram (Label fixed - original code linked to Instagram but called it X) */}
+                {/* Instagram */}
                 <li>
                   <Link
                     href="https://www.instagram.com/bricklix.official/"
                     aria-label="Follow us on Instagram"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={() => handleAction("Navigate to Instagram")}
-                    className="flex items-center justify-center w-full sm:w-16 h-16 bg-black/60 border border-white/20 rounded-xl transition-all duration-300 hover:bg-white/10 hover:border-red-500/50 group focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500"
+                    className="flex items-center justify-center w-full sm:w-16 h-16 bg-black/60 border border-white/20 rounded-xl transition-all duration-300 hover:bg-white/10 hover:border-red-500/50 group focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none"
                   >
-                    <Instagram className="w-6 h-6 group-hover:text-pink-600" aria-hidden="true" /> {/* Changed hover color to be more Instagram-like */}
+                    <Instagram className="w-6 h-6 group-hover:text-pink-600" aria-hidden="true" />
                   </Link>
                 </li>
               </ul>

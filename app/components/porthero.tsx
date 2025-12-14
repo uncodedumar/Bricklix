@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useCallback } from 'react';
-// Removed: import Link from 'next/link'; to resolve "Could not resolve next/link" error.
-// Using standard <a> tags instead for navigation in this environment.
+import Link from 'next/link';
 
 // PortfolioCard component now uses its 'title' prop in the overlay
 const PortfolioCard: React.FC<{ title: string; imagePath: string }> = ({ title, imagePath }) => {
@@ -122,9 +121,9 @@ export default function PortfolioCarousel() {
                 muted
                 playsInline
                 className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto object-cover transform -translate-x-1/2 -translate-y-1/2 z-0 opacity-20"
+                aria-hidden="true"
             >
-                {/* Add your video source here */}
-                <source src="/portbg.mp4" type="video/mp4" />
+                <source src="/Portbg.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
 
@@ -144,12 +143,10 @@ export default function PortfolioCarousel() {
 
                     {/* Buttons */}
                     <div className="mt-12 flex flex-col sm:flex-row justify-center gap-4">
-                        {/* Replaced Next.js Link with <a> tag */}
-                        <a href='/contact' className="flex items-center justify-center space-x-2 px-8 py-4 bg-red-700 text-white rounded-full font-semibold text-lg transition-all duration-300 hover:bg-red-600 hover:shadow-xl hover:shadow-red-700/30 ring-2 ring-red-700/50">
+                        <Link href='/contact' className="flex items-center justify-center space-x-2 px-8 py-4 bg-red-700 text-white rounded-full font-semibold text-lg transition-all duration-300 hover:bg-red-600 hover:shadow-xl hover:shadow-red-700/30 ring-2 ring-red-700/50 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none" aria-label="Contact us to collaborate">
                             <span>Let&apos;s Collaborate</span>
                             <span>→</span>
-                        </a>
-                        
+                        </Link>
                     </div>
                 </div>
 
@@ -173,8 +170,6 @@ export default function PortfolioCarousel() {
                         ))}
                     </div>
                 </div>
-
-
             </div>
         </div>
     );

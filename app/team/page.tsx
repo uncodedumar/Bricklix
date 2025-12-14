@@ -1,23 +1,29 @@
-// app/services/page.tsx
+// app/team/page.tsx
 
+import type { Metadata } from "next";
 import React from "react";
-import Navbar from "../components/navbar";
 import TeamHeroSection from "../components/teamhero";
 import ProfilesSection from "../components/profiles";
 import TeamIntroSection from "../components/teams";
 import Chatbot from "../components/chatbot";
-import Footer from "../components/footer";
 
-export default function teamPage() {
+export const metadata: Metadata = {
+  title: "Our Team",
+  description: "Meet the talented team behind Bricklix. Our experts in web development, design, AI, and cybersecurity are dedicated to delivering exceptional results.",
+  openGraph: {
+    title: "Our Team | Bricklix",
+    description: "Meet the talented team behind Bricklix. Experts dedicated to delivering exceptional results.",
+    url: "https://www.bricklix.com/team",
+  },
+};
+
+export default function TeamPage() {
   return (
     <>
-      <Navbar></Navbar>
-      <TeamHeroSection></TeamHeroSection>
-      <Chatbot></Chatbot>
-      <ProfilesSection></ProfilesSection>
-      <TeamIntroSection></TeamIntroSection>
-
-      <Footer></Footer>
+      <TeamHeroSection />
+      <Chatbot />
+      <ProfilesSection />
+      <TeamIntroSection />
     </>
   );
 }

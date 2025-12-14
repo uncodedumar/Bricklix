@@ -103,14 +103,14 @@ const supportLinks: Support[] = [
 ];
 // Lightning bolt icon component
 const LightningIcon = () => (
-    <Link href="/" className="flex items-center space-x-2 cursor-pointer pb-1">
+    <Link href="/" className="flex items-center space-x-2 cursor-pointer pb-1" aria-label="Bricklix Home">
       <Image
-        src="/logo.svg" // Replace with your actual logo path in the public folder
+        src="/logo.svg"
         alt="Bricklix Logo"
         width={120}
         height={36}
         className="h-9 w-auto"
-        priority
+        loading="lazy"
       />
     </Link>
 );
@@ -141,7 +141,7 @@ const FooterColumn = ({ section, index }: FooterColumnProps) => {
                     <li key={linkIndex}>
                         <Link
                             href={link.href}
-                            className="text-gray-300 hover:text-white transition-colors duration-300 text-sm sm:text-base block"
+                            className="text-gray-300 hover:text-white transition-colors duration-300 text-sm sm:text-base block focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none rounded"
                         >
                             {link.label}
                         </Link>
@@ -173,10 +173,10 @@ const SocialIcons = () => {
                         href={social.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-gray-800/50 hover:bg-red-600 rounded-lg transition-all duration-300 hover:scale-110"
-                        aria-label={social.label}
+                        className="group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-gray-800/50 hover:bg-red-600 rounded-lg transition-all duration-300 hover:scale-110 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none"
+                        aria-label={`Follow us on ${social.label}`}
                     >
-                        <div className="text-gray-300 group-hover:text-white transition-colors duration-300">
+                        <div className="text-gray-300 group-hover:text-white transition-colors duration-300" aria-hidden="true">
                             {social.icon}
                         </div>
                     </a>
@@ -208,25 +208,26 @@ const SupportInfo = () => {
                             <p className="font-semibold text-white">{support.label}</p>
                             <p className="text-gray-200">{support.email}</p>
                             <div className="flex flex-wrap gap-2">
-                            <Link
-                                        href="#"
-                                        className=" text-gray-200 underline-offset-4 hover:underline"
+                                    <a
+                                        href="tel:+12248445596"
+                                        className="text-gray-200 underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none rounded"
+                                        aria-label="Call us at +1 (224) 844 5596"
                                     >
                                         +1 (224) 844 5596
-                                        
-                                    </Link>
-                                    <Link
-                                        href="#"
-                                        className=" text-gray-200 underline-offset-4 hover:underline"
+                                    </a>
+                                    <a
+                                        href="https://maps.google.com/?q=8402+Captons+Ln,+104,+Darien,+IL+60561"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-gray-200 underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none rounded"
+                                        aria-label="View our location on Google Maps"
                                     >
                                         8402 Captons Ln, # 104, Darien, IL 60561
-                                        
-                                    </Link>
-                                    
-                                    
+                                    </a>
                                     <a
                                         href={`mailto:${support.email}`}
-                                        className=" text-gray-200 underline-offset-4  hover:underline"
+                                        className="text-gray-200 underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none rounded"
+                                        aria-label={`Email us at ${support.email}`}
                                     >
                                         Email us
                                     </a>
