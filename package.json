@@ -10,6 +10,7 @@
     "test-email": "tsx test-email.ts"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.6.1",
     "@vercel/speed-insights": "^1.2.0",
     "framer-motion": "^12.23.24",
     "lucide-react": "^0.554.0",

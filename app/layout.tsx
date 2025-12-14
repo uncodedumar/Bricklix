@@ -1,7 +1,8 @@
 // NO "use client" directive here!
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { SpeedInsights } from "@vercel/speed-insights/next" // Now imported and used
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 import Navbar from './components/navbar';
@@ -156,10 +157,11 @@ export default function RootLayout({
         </main>
         <Footer />
         {/*
-          ✅ The SpeedInsights component must be rendered to be active.
-          We place it here inside the body of the layout.
+          ✅ The SpeedInsights and Analytics components must be rendered to be active.
+          We place them here inside the body of the layout.
         */}
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
