@@ -26,7 +26,7 @@ const servicesData = [
         description: 'Modern, responsive websites built with latest technologies',
         icon: Code,
         span: 'col-span-1 row-span-1',
-        image: '/web.jpeg',
+        image: '/web.avif',
         imageAlt: 'An abstract code structure representing modern web development', // SEO/A11y
         width: 600, // PERFORMANCE: Explicit dimensions to prevent CLS
         height: 350,
@@ -98,7 +98,7 @@ const servicesData = [
         description: 'Data-driven strategies to grow your presence',
         icon: Globe,
         span: 'col-span-1 row-span-1',
-        image: '/digi.jpeg',
+        image: '/digi.jpg',
         imageAlt: 'Global map with data points and connections, symbolizing digital reach', // SEO/A11y
         width: 600,
         height: 350,
@@ -185,7 +185,7 @@ const servicesData = [
         description: 'Speed and performance enhancement',
         icon: Zap,
         span: 'lg:col-span-2 row-span-1',
-        image: '/seo.jpeg',
+        image: '/seo.jpg',
         imageAlt: 'A graphic representing high-speed data flow and system optimization', // SEO/A11y
         width: 900,
         height: 350,
@@ -200,7 +200,7 @@ const servicesData = [
         description: 'Secure data storage and encryption',
         icon: Lock,
         span: 'col-span-1 row-span-1',
-        image: '/data.jpeg',
+        image: '/data.jpg',
         imageAlt: 'A digital padlock icon over a secure database, representing data security', // SEO/A11y
         width: 600,
         height: 350,
