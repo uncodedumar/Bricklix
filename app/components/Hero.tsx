@@ -62,8 +62,8 @@ const OptimizedHero: React.FC = () => {
     { id: 6, name: "Sam", imageUrl: "/19.jpg", alt: "Sam's profile photo" }, // Changed name for uniqueness
   ];
 
-  const videoSrc = "/herobg.mp4";
-  const imageFallbackSrc = "/herobg-fallback.webp"; // Use a dedicated, optimized fallback image (WebP is better)
+  const videoSrc = "/Herobg.mp4";
+  const imageFallbackSrc = "/Herobg-fallback.webp"; // Use a dedicated, optimized fallback image (WebP is better)
 
   return (
     // Accessibility: Main role for the section, using a full-page semantic tag is good
