@@ -42,7 +42,7 @@ const teamMembers: ChromaItem[] = [
         gradient: "linear-gradient(145deg, #EF4444, #000)",
         bio: {
             paragraph: "Kashif Zulfiqar Awan drives enterprise transformation through strategic program leadership, PMO governance, and executive-level management across global organizations.",
-            bullets: ["Senior Program Director & Executive Consultant — AT&T (via WNA Ltd.)","Director — Ericsson","President & Owner — Awan Business Management Group LLC","Program & Portfolio Management", "PMO Strategy & Governance", "Executive Leadership & Stakeholder Engagement", "Agile & Team Development"],
+            bullets: ["Senior Program Director & Executive Consultant — AT&T (via WNA Ltd.)","Executed Programs over 600M USD","Director — Ericsson","President & Owner — Awan Business Management Group LLC","Program & Portfolio Management", "PMO Strategy & Governance", "Executive Leadership & Stakeholder Engagement", "Agile & Team Development"],
         },
     },
     {
@@ -65,7 +65,7 @@ const teamMembers: ChromaItem[] = [
         borderColor: "#8B5CF6",
         gradient: "linear-gradient(195deg, #8B5CF6, #000)",
         bio: {
-            paragraph: "Umar Riaz heads Bricklix’s Design & Development Team and co-architects its digital vision. With 5+ years in AI, web, and Designing, he balances strong technical intelligence with strategic, visionary leadership.",
+            paragraph: "Umar Riaz heads Bricklix’s Design & Development Team and co-architects its digital vision. With 5+ years in AI, web, and Designing, he balances strong technical intelligence with strategic, visionary leadership. ",
             bullets: ["Full-Stack Development (MERN)", "AI/UX Design Integration", "Scalable Applications", "Performance Optimization"],
         },
     },
@@ -166,15 +166,21 @@ const teamMembers: ChromaItem[] = [
         },
     },
     {
-        image: "/us.jpg",
-        title: "Usman Hassan",
+        image: "/fariz.jpg",
+        title: "Fariz",
         subtitle: "Graphic Designer",
-        location: "LA",
+        location: "Lahore",
         borderColor: "#EC4899",
         gradient: "linear-gradient(225deg, #EC4899, #000)",
         bio: {
-            paragraph: "Usman Hassan is the creative engine and Graphic Designer for Bricklix. With 1+ years of experience in digital creativity, he blends artistic instinct with strategic thinking to transform ideas into striking, high-performing designs.",
-            bullets: ["Design Support", "Asset Creation", "Software Practice", "Visual Research"],
+            paragraph: "Fariz is a Graphic Designer at Bricklix with 1+ years of professional experience, including a high-impact internship at the NASTP. He blends technical precision with artistic instinct to transform complex concepts into striking, high-performing visual identities.",
+            bullets: [
+                "Brand Identity Design", 
+                "Visual Strategy at NASTP", 
+                "Advanced Digital Illustration", 
+                "Marketing Asset Creation"
+            ],
+        
         },
     },
     {
@@ -189,6 +195,19 @@ const teamMembers: ChromaItem[] = [
             bullets: ["SEO/SEM Strategy", "Social Media Management", "Content Marketing", "Performance Analytics"],
         },
     }
+    ,
+    {
+        image: "/us.jpg",
+        title: "Usman Hassan",
+        subtitle: "Graphic Designer",
+        location: "LA",
+        borderColor: "#EC4899",
+        gradient: "linear-gradient(225deg, #EC4899, #000)",
+        bio: {
+            paragraph: "Usman Hassan is the creative engine and Graphic Designer for Bricklix. With 1+ years of experience in digital creativity, he blends artistic instinct with strategic thinking to transform ideas into striking, high-performing designs.",
+            bullets: ["Design Support", "Asset Creation", "Software Practice", "Visual Research"],
+        },
+    },
 ];
 
 // --- ChromaGrid Component (Optimized) ----------------------------------------

@@ -55,6 +55,30 @@ const PROJECTS: Project[] = [
     // Using a bicycle detail shot
     imageUrl: './A9.png',
   },
+  {
+    id: 6,
+    title: 'Prontoms',
+    year: 2023,
+    url: 'https://prontoms.com/',
+    // Using a bicycle detail shot
+    imageUrl: './A10.png',
+  },
+  {
+    id: 7,
+    title: 'pBear Maintenance',
+    year: 2023,
+    url: 'https://pbearmaintenance.com/',
+    // Using a bicycle detail shot
+    imageUrl: './A11.png',
+  },
+  {
+    id: 8,
+    title: 'Fog Control Solution',
+    year: 2023,
+    url: 'https://fogcontrolsolution.com/',
+    // Using a bicycle detail shot
+    imageUrl: './A12.png',
+  },
  
   
 ];
@@ -93,7 +117,7 @@ const ImageMatchingShowcase: React.FC = () => {
               // **MODIFIED: Removed aspect-ratio, added fixed h-96 class** className="group block bg-black **h-96 w-full** transform transition-all duration-300 hover:scale-[1.01]" 
             >
               {/* Image and Metadata Wrapper */}
-              <div className="relative w-full h-full">
+              <div className="relative w-full h-full bg-white rounded-lg">
 
                 {/* The main image container with rounded corners and subtle border/shadow */}
                 <div className="rounded-xl overflow-hidden h-full w-full shadow-2xl shadow-black/50">

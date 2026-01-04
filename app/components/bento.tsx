@@ -47,7 +47,7 @@ const servicesData = [
         description: 'Beautiful, intuitive interfaces that users love',
         icon: Palette,
         span: 'col-span-1 row-span-1',
-        image: '/uiux.jpeg',
+        image: '/uiux.avif',
         imageAlt: 'A palette and color swatches symbolizing creative UI UX design process', // SEO/A11y
         width: 600,
         height: 350,
@@ -113,7 +113,7 @@ const servicesData = [
         description: 'Seamless third-party service connections',
         icon: Settings,
         span: 'col-span-1 row-span-1',
-        image: '/api.jpeg',
+        image: '/api.avif',
         imageAlt: 'Interconnected digital nodes, representing API and system integration', // SEO/A11y
         width: 600,
         height: 350,

@@ -63,11 +63,8 @@ const OptimizedHero: React.FC = () => {
   ];
 
   const videoSrc = "/Herobg.mp4";
-<<<<<<< HEAD
-  const imageFallbackSrc = "/Herobg-fallback.webp"; // Use a dedicated, optimized fallback image (WebP is better)
-=======
   const imageFallbackSrc = "/hero.webp"; // Use existing optimized image
->>>>>>> 28609f7 (lighthouse improvements)
+
 
   return (
     // Accessibility: Main role for the section, using a full-page semantic tag is good
