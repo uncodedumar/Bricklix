@@ -251,7 +251,7 @@ const OptimizedHero: React.FC = () => {
                     aria-label="Follow us on Instagram"
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => handleAction("Navigate to Instagram")}
+                    onClick={() => handleAction("Navigate toInstagram")}
                     className="flex items-center justify-center w-full sm:w-16 h-16 bg-black/60 border border-white/20 rounded-xl transition-all duration-300 hover:bg-white/10 hover:border-red-500/50 group focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500 focus-visible:outline-none"
                   >
                     <Instagram className="w-6 h-6 group-hover:text-pink-600" aria-hidden="true" />
