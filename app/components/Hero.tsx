@@ -247,7 +247,7 @@ const OptimizedHero: React.FC = () => {
                 {/* Instagram */}
                 <li>
                   <Link
-                    href="https://www.instagram.com/bricklix.official/"
+                    href="https://www.instagram.com/bricklixofficial/"
                     aria-label="Follow us on Instagram"
                     target="_blank"
                     rel="noopener noreferrer"
