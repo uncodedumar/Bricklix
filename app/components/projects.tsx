@@ -61,7 +61,7 @@ const PROJECTS: Project[] = [
     year: 2023,
     url: 'https://prontoms.com/',
     // Using a bicycle detail shot
-    imageUrl: './A10.png',
+    imageUrl: './a10.png',
   },
   {
     id: 7,
@@ -69,7 +69,7 @@ const PROJECTS: Project[] = [
     year: 2023,
     url: 'https://pbearmaintenance.com/',
     // Using a bicycle detail shot
-    imageUrl: './A11.png',
+    imageUrl: './a11.png',
   },
   {
     id: 8,
@@ -77,7 +77,7 @@ const PROJECTS: Project[] = [
     year: 2023,
     url: 'https://fogcontrolsolution.com/',
     // Using a bicycle detail shot
-    imageUrl: './A12.png',
+    imageUrl: './a12.png',
   },
  
   
