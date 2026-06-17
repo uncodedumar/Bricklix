@@ -9,6 +9,7 @@ import TestimonialsSection from "./components/testimonial";
 import FAQsSection from "./components/Faqs";
 import TextLoop from "./components/textloop";
 import Chatbot from "./components/chatbot";
+import BPOCTA from "./components/bpoCta";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -25,6 +26,7 @@ export default function Home() {
     <>
       <Hero />
       <SpotlightCardsSection />
+      <BPOCTA />
       <LogoLoopSection />
       <TiltedCardsSection />
       <CTASection />

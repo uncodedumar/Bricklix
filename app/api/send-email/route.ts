@@ -1,9 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-// Initialize Resend with your API key from environment variables
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const FROM_EMAIL =
     process.env.RESEND_FROM_EMAIL || 'Bricklixbot Lead <onboarding@resend.dev>';
 const TO_EMAIL = process.env.RESEND_TO_EMAIL || 'delivered@resend.dev';
@@ -16,13 +13,16 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
         
-        if (!process.env.RESEND_API_KEY) {
+        const apiKey = process.env.RESEND_API_KEY;
+        if (!apiKey) {
             console.error('RESEND_API_KEY is not configured');
             return NextResponse.json(
                 { error: 'Email service not configured. Please try again later.' },
                 { status: 500 }
             );
         }
+
+        const resend = new Resend(apiKey);
 
         // Construct the email body
         const emailBody = `

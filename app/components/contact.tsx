@@ -5,7 +5,7 @@ type InquiryType = 'contactSales' | 'takeService' | 'workOnProject' | 'workWithT
 
 // Define inquiry options with an explicit index for directional change logic
 const inquiryOptions: { id: InquiryType; label: string; index: number }[] = [
-    { id: 'contactSales', label: 'Contact Sales', index: 0 },
+    { id: 'contactSales', label: 'Contact Sales', index: 4 },
     { id: 'takeService', label: 'Get Service', index: 1 },
     { id: 'workOnProject', label: 'New Project', index: 2 },
     { id: 'workWithTeam', label: 'Staff Augmentation', index: 3 },
@@ -293,11 +293,11 @@ export default function App() {
     const currentOption = inquiryOptions.find(opt => opt.id === inquiryType) || inquiryOptions[0];
 
     const gradientOptions = [
+        { id: 'outsourceProject', gradient: 'from-red-800/30 via-stone-700/30 to-red-600/30' },
         { id: 'contactSales', gradient: 'from-red-600/30 via-stone-900/40 to-red-900/30' },
         { id: 'takeService', gradient: 'from-stone-700/30 via-red-600/30 to-stone-800/30' },
         { id: 'workOnProject', gradient: 'from-red-700/30 via-stone-900/30 to-red-800/30' },
         { id: 'workWithTeam', gradient: 'from-stone-600/30 via-red-700/30 to-stone-900/30' },
-        { id: 'outsourceProject', gradient: 'from-red-800/30 via-stone-700/30 to-red-600/30' },
     ];
 
     const currentGradient = gradientOptions.find(opt => opt.id === inquiryType)?.gradient || gradientOptions[0].gradient;

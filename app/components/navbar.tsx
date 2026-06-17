@@ -14,6 +14,8 @@ interface NavLink {
 const navLinks: NavLink[] = [
   { name: 'Home', href: '/' },
   { name: 'Services', href: '/services' },
+  { name: 'BPO & RPO', href: '/bpo' },
+
   { name: 'Portfolio', href: '/portfolio' },
   { name: 'Team', href: '/team' },
 ];
